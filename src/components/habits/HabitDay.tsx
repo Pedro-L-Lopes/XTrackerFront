@@ -6,7 +6,7 @@ import * as Popover from "@radix-ui/react-popover";
 import ProgressBar from "./ProgressBar";
 import HabitList from "./HabitList";
 
-//
+// Libs
 import dayjs from "dayjs";
 import clsx from "clsx";
 

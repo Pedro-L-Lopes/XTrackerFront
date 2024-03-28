@@ -29,6 +29,19 @@ export const getSummary = createAsyncThunk(
   }
 );
 
+export const postHabit = createAsyncThunk(
+  "habits/postHabit",
+  async (habitData: { title: string; weekDays: number[] }, thunkAPI) => {
+    const data = await habitService.postHabit(habitData);
+
+    if (data.errors) {
+      return thunkAPI.rejectWithValue(data.errors[0]);
+    }
+
+    return data;
+  }
+);
+
 export const habitSlice = createSlice({
   name: "habit",
   initialState,
@@ -43,6 +56,17 @@ export const habitSlice = createSlice({
         state.loading = false;
         state.error = false;
         state.habits = action.payload;
+      })
+      .addCase(postHabit.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(postHabit.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = false;
+        state.habit = action.payload;
+        state.habits.unshift(state.habit);
       });
   },
 });

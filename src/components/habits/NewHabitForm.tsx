@@ -1,6 +1,15 @@
-import { FaCheck } from "react-icons/fa6";
-import * as Checkbox from "@radix-ui/react-checkbox";
+// Hooks
 import { FormEvent, useState } from "react";
+
+// Redux
+import { postHabit } from "../../slices/habitSlice";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+
+// Components
+import * as Checkbox from "@radix-ui/react-checkbox";
+
+// Icons
+import { FaCheck } from "react-icons/fa6";
 
 const availableWeekDays = [
   "Domingo",
@@ -13,6 +22,8 @@ const availableWeekDays = [
 ];
 
 const NewHabitForm = () => {
+  const dispatch = useAppDispatch();
+
   const [title, setTitle] = useState("");
   const [weekDays, setWeekDays] = useState<number[]>([]);
 
@@ -24,6 +35,8 @@ const NewHabitForm = () => {
     }
 
     const habitData = { title, weekDays };
+
+    await dispatch(postHabit(habitData));
 
     setTitle("");
     setWeekDays([]);
