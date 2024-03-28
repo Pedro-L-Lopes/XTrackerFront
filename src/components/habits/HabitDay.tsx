@@ -4,6 +4,7 @@ import { useState } from "react";
 // Components
 import * as Popover from "@radix-ui/react-popover";
 import ProgressBar from "./ProgressBar";
+import HabitList from "./HabitList";
 
 //
 import dayjs from "dayjs";
@@ -67,7 +68,7 @@ const HabitDay = ({
 
           <ProgressBar progress={completedPercentage} />
 
-          {/* <HabitList date={date} onCompletedChanged={handleCompletedChange} /> */}
+          <HabitList date={date} onCompletedChanged={handleCompletedChange} />
 
           <Popover.Arrow height={8} width={16} className="fill-zinc-900" />
         </Popover.Content>
