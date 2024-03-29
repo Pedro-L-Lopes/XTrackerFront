@@ -1,71 +1,62 @@
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { getHabitDay } from "../../slices/habitSlice";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
 import * as Checkbox from "@radix-ui/react-checkbox";
-import { useState } from "react";
 import { FaCheck } from "react-icons/fa6";
 import dayjs from "dayjs";
+import { HabitsInfo } from "../../interfaces/habits/IHabitsInfo";
 
 interface HabitListProps {
   date: Date;
   onCompletedChanged: (completed: number) => void;
 }
 
-interface HabitsInfo {
-  possibleHabits: {
-    id: string;
-    title: string;
-    created_at: string;
-  }[];
-  completedHabits: string[];
-}
-
 const HabitList = ({ date, onCompletedChanged }: HabitListProps) => {
-  const [habitsInfo, setHabitsInfo] = useState<HabitsInfo>();
+  const dispatch = useAppDispatch();
+  const { habitsDay, loading } = useSelector((state: any) => state.habit);
+  const [habitsInfo, setHabitsInfo] = useState<HabitsInfo | null>(null);
 
   const formattedDate = dayjs(date).format("YYYY-MM-DD");
 
-  async function handleToggleHabit(habitId: string, date: string) {
-    const isHabitAlreadyCompleted =
-      habitsInfo!.completedHabits.includes(habitId);
+  useEffect(() => {
+    dispatch(getHabitDay(formattedDate));
+  }, [dispatch, formattedDate]);
 
-    let completedHabits: string[] = [];
-
-    if (isHabitAlreadyCompleted) {
-      completedHabits = habitsInfo!.completedHabits.filter(
-        (id) => id !== habitId
-      );
-    } else {
-      completedHabits = [...habitsInfo!.completedHabits, habitId];
+  useEffect(() => {
+    if (!loading && habitsDay) {
+      setHabitsInfo(habitsDay);
     }
+  }, [loading, habitsDay]);
 
-    setHabitsInfo({
-      possibleHabits: habitsInfo!.possibleHabits,
-      completedHabits,
-    });
-
-    onCompletedChanged(completedHabits.length);
+  if (loading || !habitsInfo) {
+    return <p>Carregando...</p>;
   }
 
   return (
     <div className="mt-6 flex flex-col gap-3">
-      {habitsInfo?.possibleHabits.map((habit) => {
-        return (
-          <Checkbox.Root
-            key={habit.id}
-            onCheckedChange={() => handleToggleHabit(habit.id, formattedDate)}
-            checked={habitsInfo.completedHabits.includes(habit.id)}
-            className="flex items-center gap-3 group focus:outline-none disabled:cursor-not-allowed"
+      {habitsInfo?.possibleHabits.map((habit) => (
+        <Checkbox.Root
+          key={habit.id}
+          checked={habitsInfo.completedHabits.includes(habit.id)}
+          className="flex items-center gap-3 group focus:outline-none disabled:cursor-not-allowed"
+        >
+          <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2 border-zinc-800 group-data-[state=checked]:bg-green-500 group-data-[state=checked]:border-green-50 transition-colors group-focus:ring-2 group-focus:ring-violet-600 group-focus:ring-offset-2 group-focus:ring-offset-background">
+            <Checkbox.Indicator>
+              <FaCheck size={20} className="text-white" />
+            </Checkbox.Indicator>
+          </div>
+          <span
+            className={`font-semibold text-xl text-white leading-tight ${
+              habitsInfo.completedHabits.includes(habit.id)
+                ? "line-through text-zinc-400"
+                : ""
+            }`}
           >
-            <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2 border-zinc-800 group-data-[state=checked]:bg-green-500 group-data-[state=checked]:border-green-50 transition-colors group-focus:ring-2 group-focus:ring-violet-600 group-focus:ring-offset-2 group-focus:ring-offset-background">
-              <Checkbox.Indicator>
-                <FaCheck size={20} className="text-white" />
-              </Checkbox.Indicator>
-            </div>
-
-            <span className="font-semibold text-xl text-white leading-tight group-data-[state=checked]:line-through group-data-[state=checked]:text-zinc-400">
-              {habit.title}
-            </span>
-          </Checkbox.Root>
-        );
-      })}
+            {habit.title}
+          </span>
+        </Checkbox.Root>
+      ))}
     </div>
   );
 };
