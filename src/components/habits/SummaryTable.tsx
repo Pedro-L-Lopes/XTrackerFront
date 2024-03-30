@@ -6,19 +6,15 @@ import HabitDay from "./HabitDay";
 // Libs
 import dayjs from "dayjs";
 
+// Interfaces
+import { Summary } from "../../interfaces/habits/ISummary";
+
 const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
 
 const summaryDates = generateDatesFromYearBeginning();
 
 const minimumSummaryDatesSize = 18 * 7;
 const amountOfDaysToFill = minimumSummaryDatesSize - summaryDates.length;
-
-type Summary = {
-  id: string;
-  date: string;
-  amount: number;
-  completed: number;
-}[];
 
 type SummaryTableProps = {
   summary?: Summary;
@@ -51,7 +47,7 @@ const SummaryTable = ({ summary }: SummaryTableProps) => {
                 <HabitDay
                   key={date.toString()}
                   date={date}
-                  amount={dayInSummary?.amount}
+                  defaultAmount={dayInSummary?.amount}
                   defaultCompleted={dayInSummary?.completed}
                 />
               );

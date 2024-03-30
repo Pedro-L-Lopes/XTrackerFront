@@ -1,36 +1,72 @@
+// Hooks
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { getHabitDay } from "../../slices/habitSlice";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
+
+// Components
 import * as Checkbox from "@radix-ui/react-checkbox";
+
+// Icons
 import { FaCheck } from "react-icons/fa6";
+
+// Libs
 import dayjs from "dayjs";
+
+// Interfaces
 import { HabitsInfo } from "../../interfaces/habits/IHabitsInfo";
+
+// Api
+import { api } from "../../lib/api";
 
 interface HabitListProps {
   date: Date;
-  onCompletedChanged: (completed: number) => void;
+  onCompletedChanged: (completed: number, amount: number) => void;
 }
 
 const HabitList = ({ date, onCompletedChanged }: HabitListProps) => {
-  const dispatch = useAppDispatch();
-  const { habitsDay, loading } = useSelector((state: any) => state.habit);
-  const [habitsInfo, setHabitsInfo] = useState<HabitsInfo | null>(null);
+  const [habitsInfo, setHabitsInfo] = useState<HabitsInfo>();
 
   const formattedDate = dayjs(date).format("YYYY-MM-DD");
 
   useEffect(() => {
-    dispatch(getHabitDay(formattedDate));
-  }, [dispatch, formattedDate]);
+    api
+      .get("/day", {
+        params: {
+          date: date.toISOString(),
+        },
+      })
+      .then((response) => {
+        setHabitsInfo(response.data);
+        onCompletedChanged(
+          response.data.completedHabits.length,
+          response.data.possibleHabits.length
+        );
+      });
+  }, []);
 
-  useEffect(() => {
-    if (!loading && habitsDay) {
-      setHabitsInfo(habitsDay);
+  async function handleToggleHabit(habitId: string) {
+    const isHabitAlreadyCompleted =
+      habitsInfo!.completedHabits.includes(habitId);
+
+    await api.patch(`/${habitId}/toggle?date=${formattedDate}`);
+
+    let completedHabits: string[] = [];
+
+    if (isHabitAlreadyCompleted) {
+      completedHabits = habitsInfo!.completedHabits.filter(
+        (id) => id !== habitId
+      );
+    } else {
+      completedHabits = [...habitsInfo!.completedHabits, habitId];
     }
-  }, [loading, habitsDay]);
 
-  if (loading || !habitsInfo) {
-    return <p>Carregando...</p>;
+    setHabitsInfo({
+      possibleHabits: habitsInfo!.possibleHabits,
+      completedHabits,
+    });
+
+    onCompletedChanged(
+      completedHabits.length,
+      habitsInfo!.possibleHabits.length
+    );
   }
 
   return (
@@ -38,6 +74,7 @@ const HabitList = ({ date, onCompletedChanged }: HabitListProps) => {
       {habitsInfo?.possibleHabits.map((habit) => (
         <Checkbox.Root
           key={habit.id}
+          onCheckedChange={() => handleToggleHabit(habit.id)}
           checked={habitsInfo.completedHabits.includes(habit.id)}
           className="flex items-center gap-3 group focus:outline-none disabled:cursor-not-allowed"
         >
@@ -57,6 +94,10 @@ const HabitList = ({ date, onCompletedChanged }: HabitListProps) => {
           </span>
         </Checkbox.Root>
       ))}
+      <div className="text-white mt-4">
+        Completed: {habitsInfo?.completedHabits.length}/
+        {habitsInfo?.possibleHabits.length}
+      </div>
     </div>
   );
 };

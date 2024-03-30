@@ -13,15 +13,16 @@ import clsx from "clsx";
 interface HabitDayProps {
   date: Date;
   defaultCompleted?: number;
-  amount?: number;
+  defaultAmount?: number;
 }
 
 const HabitDay = ({
   defaultCompleted = 0,
-  amount = 0,
+  defaultAmount = 0,
   date,
 }: HabitDayProps) => {
   const [completed, setCompleted] = useState(defaultCompleted);
+  const [amount, setAmount] = useState(defaultAmount);
 
   const completedPercentage =
     amount > 0 ? Math.round((completed / amount) * 100) : 0;
@@ -30,7 +31,7 @@ const HabitDay = ({
   const dayOfWeek = dayjs(date).format("dddd");
 
   const classes = clsx(
-    "w-10 h-10 border-2 border-zinc-800 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-violet-600 focus:ring-offset-2 focus:ring-offset-background",
+    "w-10 h-10 border-2 border-zinc-800 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-violet-600 focus:ring-offset-background",
     {
       "bg-zinc-900 border-zinc-800": completedPercentage === 0,
       "bg-violet-900 border-violet-500":
@@ -46,8 +47,9 @@ const HabitDay = ({
     }
   );
 
-  async function handleCompletedChange(completed: number) {
+  async function handleCompletedChange(completed: number, amount: number) {
     setCompleted(completed);
+    setAmount(amount);
   }
 
   return (
@@ -56,12 +58,8 @@ const HabitDay = ({
 
       <Popover.Portal>
         <Popover.Content className="min-w-[320px] p-6 rounded-2xl bg-zinc-900 flex flex-col">
-          <div className="flex justify-between">
-            <span className="font-semibold text-zinc-400">{dayOfWeek}</span>
-            <span className="font-semibold text-zinc-400">
-              {completed}/{amount}
-            </span>
-          </div>
+          <span className="font-semibold text-zinc-400">{dayOfWeek}</span>
+
           <span className="mt-1 font-extrabold leading-tight text-3xl">
             {dayAndMonth}
           </span>

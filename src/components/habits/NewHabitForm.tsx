@@ -1,15 +1,14 @@
 // Hooks
 import { FormEvent, useState } from "react";
 
-// Redux
-import { postHabit } from "../../slices/habitSlice";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-
 // Components
 import * as Checkbox from "@radix-ui/react-checkbox";
 
 // Icons
 import { FaCheck } from "react-icons/fa6";
+
+// Api
+import { api } from "../../lib/api";
 
 const availableWeekDays = [
   "Domingo",
@@ -22,21 +21,20 @@ const availableWeekDays = [
 ];
 
 const NewHabitForm = () => {
-  const dispatch = useAppDispatch();
-
   const [title, setTitle] = useState("");
   const [weekDays, setWeekDays] = useState<number[]>([]);
 
-  async function createNewHabit(e: FormEvent) {
-    e.preventDefault();
+  async function createNewHabit(event: FormEvent) {
+    event.preventDefault();
 
     if (!title || weekDays.length === 0) {
       return;
     }
 
-    const habitData = { title, weekDays };
-
-    await dispatch(postHabit(habitData));
+    await api.post("/", {
+      title,
+      weekDays,
+    });
 
     setTitle("");
     setWeekDays([]);
