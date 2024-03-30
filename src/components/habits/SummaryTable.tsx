@@ -1,10 +1,12 @@
+// Css
+import "../../styles/scrollBar.css";
+
 // Components
-import { useState } from "react";
-import { generateDatesFromYearBeginning } from "../../utils/generate-dates-from-year-beginning";
 import HabitDay from "./HabitDay";
 
 // Libs
 import dayjs from "dayjs";
+import { generateDatesFromYearBeginning } from "../../utils/generate-dates-from-year-beginning";
 
 // Interfaces
 import { Summary } from "../../interfaces/habits/ISummary";

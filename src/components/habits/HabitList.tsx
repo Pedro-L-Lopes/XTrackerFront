@@ -94,10 +94,6 @@ const HabitList = ({ date, onCompletedChanged }: HabitListProps) => {
           </span>
         </Checkbox.Root>
       ))}
-      <div className="text-white mt-4">
-        Completed: {habitsInfo?.completedHabits.length}/
-        {habitsInfo?.possibleHabits.length}
-      </div>
     </div>
   );
 };

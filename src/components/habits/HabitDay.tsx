@@ -1,3 +1,6 @@
+// Css
+import "../../styles/scrollBar.css";
+
 // Hooks
 import { useState } from "react";
 
@@ -10,11 +13,8 @@ import HabitList from "./HabitList";
 import dayjs from "dayjs";
 import clsx from "clsx";
 
-interface HabitDayProps {
-  date: Date;
-  defaultCompleted?: number;
-  defaultAmount?: number;
-}
+// Interface
+import { HabitDayProps } from "../../interfaces/habits/HabitDayProps";
 
 const HabitDay = ({
   defaultCompleted = 0,
@@ -57,8 +57,13 @@ const HabitDay = ({
       <Popover.Trigger className={classes} />
 
       <Popover.Portal>
-        <Popover.Content className="min-w-[320px] p-6 rounded-2xl bg-zinc-900 flex flex-col">
-          <span className="font-semibold text-zinc-400">{dayOfWeek}</span>
+        <Popover.Content className="min-w-[320px] max-h-[500px] p-6 rounded-2xl bg-zinc-900 flex flex-col overflow-y-auto custom-scrollbar">
+          <div className="flex justify-between items-center">
+            <span className="font-semibold text-zinc-400">{dayOfWeek}</span>
+            <span className="font-semibold text-zinc-400">
+              {completed}/{amount}
+            </span>
+          </div>
 
           <span className="mt-1 font-extrabold leading-tight text-3xl">
             {dayAndMonth}
