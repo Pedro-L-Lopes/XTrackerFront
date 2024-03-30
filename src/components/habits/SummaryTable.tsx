@@ -1,6 +1,9 @@
 // Css
 import "../../styles/scrollBar.css";
 
+// Images
+import lessMore from "../../assets/lessMore.svg";
+
 // Components
 import HabitDay from "./HabitDay";
 
@@ -64,6 +67,9 @@ const SummaryTable = ({ summary }: SummaryTableProps) => {
               );
             })}
         </div>
+      </div>
+      <div className="flex justify-end">
+        <img src={lessMore} className="mt-2" />
       </div>
     </div>
   );

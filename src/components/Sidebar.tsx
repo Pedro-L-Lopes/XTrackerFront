@@ -1,13 +1,16 @@
-import React, { useState } from "react";
-import { HiMenuAlt3 } from "react-icons/hi";
-import { MdOutlineDashboard } from "react-icons/md";
-import { RiSettings4Line } from "react-icons/ri";
-import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
+// Hooks
+import { useState, createElement } from "react";
+
+// Icons
 import { Link } from "react-router-dom";
-import { BsClipboardData, BsGraphUpArrow } from "react-icons/bs";
 import { BiTask } from "react-icons/bi";
-import { LiaDumbbellSolid } from "react-icons/lia";
 import { CiLogout } from "react-icons/ci";
+import { HiMenuAlt3 } from "react-icons/hi";
+import { AiOutlineUser } from "react-icons/ai";
+import { RiSettings4Line } from "react-icons/ri";
+import { LiaDumbbellSolid } from "react-icons/lia";
+import { MdOutlineDashboard } from "react-icons/md";
+import { BsClipboardData, BsGraphUpArrow } from "react-icons/bs";
 
 const Home = () => {
   const menus = [
@@ -20,7 +23,7 @@ const Home = () => {
     { name: "Configurações", link: "/", icon: RiSettings4Line, margin: true },
     { name: "Sair", link: "/", icon: CiLogout },
   ];
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   return (
     <section className="flex gap-6 absolute">
       <div
@@ -44,7 +47,7 @@ const Home = () => {
                 menu?.margin && "mt-5"
               } group flex items-center text-sm  gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md transition-all duration-300`}
             >
-              <div>{React.createElement(menu?.icon, { size: "20" })}</div>
+              <div>{createElement(menu?.icon, { size: "20" })}</div>
               <h2
                 className={`whitespace-pre ${
                   !open && "opacity-0 translate-x-[-10px] pointer-events-none"

@@ -10,8 +10,10 @@ import NewHabitForm from "./NewHabitForm";
 
 const Header = () => {
   return (
-    <div className="w-full max-w-3xl mx-auto flex justify-between items-center">
+    <div className="w-full max-w-4xl mx-auto flex justify-between items-center">
       <img src={logo} alt="XTracker logo" />
+
+      <h2 className="opacity-75">Acompanhe seus hábitos</h2>
 
       <Dialog.Root>
         <Dialog.Trigger className="border border-violet-500 font-semibold rounded-lg px-6 py-4 flex items-center gap-3 hover:border-violet-300 transition-colors focus:outline-none focus:ring-2 focus:ring-violet-600  focus:ring-offset-background">
