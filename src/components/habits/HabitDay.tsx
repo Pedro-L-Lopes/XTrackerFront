@@ -57,7 +57,7 @@ const HabitDay = ({
       <Popover.Trigger className={classes} />
 
       <Popover.Portal>
-        <Popover.Content className="min-w-[320px] max-h-[500px] p-6 rounded-2xl bg-zinc-900 flex flex-col overflow-y-auto custom-scrollbar">
+        <Popover.Content className="min-w-[320px] max-h-[330px] p-6 rounded-2xl bg-zinc-900 flex flex-col overflow-y-auto custom-scrollbar">
           <div className="flex justify-between items-center">
             <span className="font-semibold text-zinc-400">{dayOfWeek}</span>
             <span className="font-semibold text-zinc-400">
