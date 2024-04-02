@@ -11,6 +11,7 @@ import { api } from "../lib/api";
 
 // Interfaces
 import { Summary } from "../interfaces/habits/ISummary";
+import HabitMetrics from "../components/habits/HabitsAndMetrics";
 
 const Habits = () => {
   const [summary, setSummary] = useState<Summary>([]);
@@ -22,11 +23,13 @@ const Habits = () => {
   }, []);
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
+    <div className="flex flex-col justify-center items-center">
       <div className="w-full max-w-5xl px-6 flex flex-col gap-2">
         <Header />
         <SummaryTable summary={summary} />
+        <HabitMetrics />
       </div>
+      <footer className="text-lg mt-24">teste</footer>
     </div>
   );
 };

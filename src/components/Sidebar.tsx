@@ -25,10 +25,10 @@ const Home = () => {
   ];
   const [open, setOpen] = useState(false);
   return (
-    <section className="flex gap-6 absolute">
+    <section className="flex gap-6 fixed">
       <div
         className={`bg-zinc-900 min-h-screen ${
-          open ? "w-72" : "w-16"
+          open ? "w-52" : "w-16"
         } duration-500 text-gray-100 px-4`}
       >
         <div className="py-3 flex justify-end">

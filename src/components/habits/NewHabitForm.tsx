@@ -2,25 +2,17 @@
 import { FormEvent, useState } from "react";
 
 // Components
-import * as Popover from "@radix-ui/react-popover";
 import * as Checkbox from "@radix-ui/react-checkbox";
+import Message from "../others/Message";
 
 // Icons
 import { FaCheck } from "react-icons/fa6";
 
 // Api
 import { api } from "../../lib/api";
-import Message from "../others/Message";
 
-const availableWeekDays = [
-  "Domingo",
-  "Segunda-feira",
-  "Terça-feira",
-  "Quarta-feira",
-  "Quinta-feira",
-  "Sexta-feira",
-  "Sábado",
-];
+// Utils
+import { availableWeekDays } from "../../utils/week-days";
 
 const NewHabitForm = () => {
   const [title, setTitle] = useState("");
