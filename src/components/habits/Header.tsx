@@ -10,7 +10,7 @@ import NewHabitForm from "./NewHabitForm";
 
 const Header = () => {
   return (
-    <div className="w-full max-w-4xl mx-auto flex justify-between items-center">
+    <div className="w-full max-w-4xl mx-auto flex justify-between items-center mt-10">
       <img src={logo} alt="XTracker logo" />
 
       <h2 className="opacity-75">Acompanhe seus hábitos</h2>

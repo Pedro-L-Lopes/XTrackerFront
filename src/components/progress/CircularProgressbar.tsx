@@ -1,7 +1,10 @@
-import { IHMetrics } from "../../interfaces/habits/IHMetrics";
+// Hooks
 import { useState, useEffect } from "react";
 
-const CircularProgressbar = ({ completed, available }: IHMetrics) => {
+// Interfaces
+import { IHMetricsPorgress } from "../../interfaces/habits/IHMetrics";
+
+const CircularProgressbar = ({ completed, available }: IHMetricsPorgress) => {
   const circumference = 2 * (22 / 7) * 120;
   const [percentage, setPercentage] = useState(0);
 

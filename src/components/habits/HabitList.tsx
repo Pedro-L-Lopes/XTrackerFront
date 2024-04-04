@@ -24,6 +24,8 @@ interface HabitListProps {
 const HabitList = ({ date, onCompletedChanged }: HabitListProps) => {
   const [habitsInfo, setHabitsInfo] = useState<HabitsInfo>();
 
+  console.log(habitsInfo);
+
   const formattedDate = dayjs(date).format("YYYY-MM-DD");
 
   useEffect(() => {
@@ -84,7 +86,7 @@ const HabitList = ({ date, onCompletedChanged }: HabitListProps) => {
             </Checkbox.Indicator>
           </div>
           <span
-            className={`font-semibold text-xl text-white leading-tight ${
+            className={`font-semibold text-xl text-white leading-tight truncate max-w-[220px]  ${
               habitsInfo.completedHabits.includes(habit.id)
                 ? "line-through text-zinc-400"
                 : ""

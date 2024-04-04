@@ -45,17 +45,14 @@ const AllHabits = ({ onChangeId }: Props) => {
     onChangeId(id);
   };
 
-  const renderWeekDays = (habit: Habit) => {
-    const habitWeekDays = habit.weekDays.map(String);
-    const habitWeekDaysAbbreviation = habitWeekDays
+  const renderWeekDays = (habit: Habit) =>
+    habit.weekDays
       .map((dayIndex) => availableWeekDaysAbv[Number(dayIndex)])
-      .filter(Boolean);
-
-    return habitWeekDaysAbbreviation.join(", ");
-  };
+      .filter(Boolean)
+      .join(", ");
 
   return (
-    <main className="flex flex-col overflow-y-auto custom-scrollbar max-h-[500px] md:w-[400px]">
+    <main className="flex flex-col overflow-y-auto custom-scrollbar max-h-[500px] md:w-[450px]">
       <select className="bg-zinc-900 text-white text-2xl font-bold  selection:border-none focus:border-none ">
         <option className="">Todos os Hábitos</option>
         {availableWeekDays.map((weekDay, index) => (
@@ -78,7 +75,7 @@ const AllHabits = ({ onChangeId }: Props) => {
             className={`mt-2 cursor-pointer rounded-sm mr-2 p-1 w-52 `}
             onClick={() => handleHabitClick(habit.id)}
           >
-            <p className="font-bold">{habit.title}</p>
+            <p className="font-bold truncate">{habit.title}</p>
             <p className="text-xs opacity-85">
               Recorrência: {renderWeekDays(habit)}
             </p>

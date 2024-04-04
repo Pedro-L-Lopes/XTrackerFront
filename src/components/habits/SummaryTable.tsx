@@ -1,6 +1,9 @@
 // Css
 import "../../styles/scrollBar.css";
 
+// Hooks
+import { useEffect } from "react";
+
 // Images
 import lessMore from "../../assets/lessMore.svg";
 
@@ -14,7 +17,13 @@ import { generateDatesFromYearBeginning } from "../../utils/generate-dates-from-
 // Interfaces
 import { Summary } from "../../interfaces/habits/ISummary";
 
-const weekDays = ["D", "S", "T", "Q", "Q", "S", "S"];
+// Utils
+import { weekDays } from "../../utils/week-days";
+
+// Redux
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useSelector } from "react-redux";
+import { getSummary } from "../../slices/habitSlice";
 
 const summaryDates = generateDatesFromYearBeginning();
 
@@ -25,15 +34,27 @@ type SummaryTableProps = {
   summary?: Summary;
 };
 
-const SummaryTable = ({ summary }: SummaryTableProps) => {
+const SummaryTable = () => {
+  const dispatch = useAppDispatch();
+
+  const { summary, loading } = useSelector((state: any) => state.habit);
+
+  useEffect(() => {
+    dispatch(getSummary());
+  }, [dispatch]);
+
+  if (loading) {
+    return <p>Carregando...</p>;
+  }
+
   return (
     <div className="overflow-x-scroll p-1 custom-scrollbar">
       <div className="w-full flex">
         {/* Header */}
         <div className="grid grid-rows-7 grid-flow-row gap-3">
-          {weekDays.map((weekDay, i) => (
+          {weekDays.map((weekDay, index) => (
             <div
-              key={i}
+              key={index}
               className="text-zinc-400 text-xl h-10 w-10 font-bold flex items-center justify-center"
             >
               {weekDay}
@@ -45,7 +66,7 @@ const SummaryTable = ({ summary }: SummaryTableProps) => {
           {summary &&
             summary.length > 0 &&
             summaryDates.map((date) => {
-              const dayInSummary = summary.find((day) => {
+              const dayInSummary = summary.find((day: any) => {
                 return dayjs(date).isSame(day.date, "day");
               });
               return (
