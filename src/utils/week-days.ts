@@ -14,7 +14,7 @@ export const availableWeekDaysAbv = [
   "Dom",
   "Seg",
   "Ter",
-  "Quar",
+  "Qua",
   "Qui",
   "Sex",
   "Sáb",

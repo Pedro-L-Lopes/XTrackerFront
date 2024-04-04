@@ -11,11 +11,13 @@ import Habits from "./pages/Habits";
 import { BrowserRouter } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 
+const user = false;
+
 function App() {
   return (
     <div>
       <BrowserRouter>
-        <Sidebar />
+        {/* <Sidebar /> */}
         <Habits />
       </BrowserRouter>
     </div>

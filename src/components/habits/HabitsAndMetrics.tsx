@@ -1,5 +1,5 @@
 // Hooks
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // Components
 import AllHabits from "./AllHabits";
 import HabitMetrics from "./HabitMetrics";
@@ -10,8 +10,6 @@ const HabitsAndMetrics = () => {
   const onChangeId = (id: string) => {
     setId(id);
   };
-
-  console.log(id);
 
   return (
     <main className="bg-zinc-900 p-2 flex rounded-md">

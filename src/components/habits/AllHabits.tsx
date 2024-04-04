@@ -53,10 +53,10 @@ const AllHabits = ({ onChangeId }: Props) => {
 
   return (
     <main className="flex flex-col overflow-y-auto custom-scrollbar max-h-[500px] md:w-[450px]">
-      <select className="bg-zinc-900 text-white text-2xl font-bold  selection:border-none focus:border-none ">
+      <select className="bg-zinc-900 text-3xl flex items-center text-center font-bold h-12 focus:outline-none border-b border-violet-600 ">
         <option className="">Todos os Hábitos</option>
         {availableWeekDays.map((weekDay, index) => (
-          <option className="hover:bg-violet-600" key={index}>
+          <option className="text-xl" key={index}>
             {weekDay}
           </option>
         ))}
@@ -64,7 +64,7 @@ const AllHabits = ({ onChangeId }: Props) => {
 
       {habits?.map((habit) => (
         <section
-          className={`flex items-center hover:bg-violet-600 rounded-sm mr-1 ${
+          className={`flex items-center mt-2 hover:bg-violet-600 rounded-sm mr-1 ${
             selectedHabitId === habit.id
               ? "bg-violet-600"
               : "hover:bg-violet-600"
@@ -72,24 +72,21 @@ const AllHabits = ({ onChangeId }: Props) => {
           key={habit.id}
         >
           <div
-            className={`mt-2 cursor-pointer rounded-sm mr-2 p-1 w-52 `}
+            className={`flex flex-col p-2 justify-center cursor-pointer rounded-sm mr-2 w-52`}
             onClick={() => handleHabitClick(habit.id)}
           >
-            <p className="font-bold truncate">{habit.title}</p>
-            <p className="text-xs opacity-85">
-              Recorrência: {renderWeekDays(habit)}
-            </p>
+            <p className="text-lg font-bold truncate">{habit.title}</p>
           </div>
           <div>
             <CiEdit
               size={30}
-              className="hover:text-violet-100 cursor-pointer"
+              className="hover:text-violet-100 cursor-pointer "
             />
           </div>
           <div>
             <CiTrash
               size={30}
-              className="hover:text-red-600 cursor-pointer"
+              className="hover:text-red-600 cursor-pointer ml-2"
               onClick={() => deleteHabit(habit.id)}
             />
           </div>

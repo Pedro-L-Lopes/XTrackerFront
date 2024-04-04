@@ -16,6 +16,7 @@ import { PiCursorClick } from "react-icons/pi";
 
 // Utils
 import dayjs from "dayjs";
+import { availableWeekDaysAbv } from "../../utils/week-days";
 
 type Props = {
   id: string;
@@ -45,27 +46,41 @@ const HabitMetrics = ({ id }: Props) => {
     <main className="w-full ml-1">
       {details ? (
         <>
-          <div>
-            <h1 className="text-3xl text-center font-bold border-b border-violet-600">
+          <div className="">
+            <h1 className="text-3xl flex items-center justify-center font-bold h-12 border-b border-violet-600 ">
               Detalhes
             </h1>
           </div>
 
-          <h4 className="text-sm font-semibold flex gap-2 p-2">
-            <FaCalendar size={20} />
-            Criado em {created}
-          </h4>
+          <section className="flex items-center justify-between">
+            <h4 className="text-sm font-semibold flex gap-2 p-2">
+              <FaCalendar size={20} />
+              Criado em {created}
+            </h4>
+
+            {details && (
+              <div className="flex items-center">
+                {details?.habit.weekDays.map((day: any) => (
+                  <p
+                    className="text-sm font-semibold bg-violet-600 rounded-sm mr-2 p-1"
+                    key={day}
+                  >
+                    {availableWeekDaysAbv[day].toUpperCase()}
+                  </p>
+                ))}
+              </div>
+            )}
+          </section>
 
           <h2 className="text-center text-xl font-bold">
             {details?.habit.title}
           </h2>
 
-          <div className="">
-            <CircularProgressbar
-              completed={details?.completed}
-              available={details?.available}
-            />
-          </div>
+          <CircularProgressbar
+            completed={details?.completed}
+            available={details?.available}
+          />
+
           <section className="flex justify-center items-center gap-24">
             <div className="flex flex-col justify-center items-center">
               <article className="text-center">

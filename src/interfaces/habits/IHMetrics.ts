@@ -1,4 +1,5 @@
 export interface IHMetrics {
+  weekDays: any;
   habit: {
     id: string;
     title: string;
