@@ -23,7 +23,6 @@ const Habits = () => {
         <SummaryTable />
         <HabitMetrics />
       </div>
-      <footer className="text-lg mt-24">teste</footer>
     </div>
   );
 };

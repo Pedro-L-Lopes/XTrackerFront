@@ -7,18 +7,20 @@ import "./lib/dayjs";
 // Pages
 import Habits from "./pages/Habits";
 
-// Router
-import { BrowserRouter } from "react-router-dom";
+// Components
+import Footer from "./components/Footer";
 import Sidebar from "./components/Sidebar";
 
-const user = false;
+// Router
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
-        {/* <Sidebar /> */}
+        <Sidebar />
         <Habits />
+        <Footer />
       </BrowserRouter>
     </div>
   );

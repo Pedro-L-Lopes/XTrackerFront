@@ -21,7 +21,6 @@ const Header = () => {
           Novo Hábito
         </Dialog.Trigger>
 
-        {/* Exibe conteúdo fora do Header */}
         <Dialog.Portal>
           <Dialog.Overlay className="w-screen h-screen bg-black/80 fixed inset-0" />
 
