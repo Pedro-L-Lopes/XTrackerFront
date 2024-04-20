@@ -6,20 +6,39 @@ import "./lib/dayjs";
 
 // Pages
 import Habits from "./pages/Habits";
+import Register from "./pages/auth/Register";
 
 // Components
 import Footer from "./components/Footer";
 import Sidebar from "./components/Sidebar";
 
+// Hooks
+import { useAuth } from "./hooks/useAuth";
+
 // Router
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 function App() {
+  const { auth, loading } = useAuth();
+
+  if (loading) {
+    <p>Carregando...</p>;
+  }
+
   return (
     <div>
       <BrowserRouter>
         <Sidebar />
-        <Habits />
+        <Routes>
+          <Route
+            path="/"
+            element={auth ? <Habits /> : <Navigate to="register" />}
+          />
+          <Route
+            path="/register"
+            element={!auth ? <Register /> : <Navigate to="/" />}
+          />
+        </Routes>
         <Footer />
       </BrowserRouter>
     </div>

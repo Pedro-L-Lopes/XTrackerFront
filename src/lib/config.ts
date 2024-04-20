@@ -1,4 +1,4 @@
-export const api: string = "https://localhost:7138/habit";
+export const api: string = "https://localhost:7138";
 // export const uploads: string = "http://localhost:5000/uploads";
 
 export const requestConfig = (

@@ -5,6 +5,25 @@ import habitService from "../services/habitService-old";
 import { HabitsInfo } from "../interfaces/habits/IHabitsInfo";
 import { Summary } from "../interfaces/habits/ISummary";
 
+interface User {
+  token: string;
+  // Outras propriedades do usuário, se houver
+}
+
+interface AuthState {
+  user: User;
+  // Outras propriedades de autenticação, se houver
+}
+
+interface RootStateWithAuth extends RootState {
+  auth: AuthState;
+}
+
+interface RootState {
+  auth: AuthState;
+  habit: HabitsState;
+}
+
 interface HabitsState {
   summary: Summary;
   habits: any[];
@@ -41,8 +60,10 @@ export const postHabit = createAsyncThunk(
 export const getSummary = createAsyncThunk(
   "habits/getSummary",
   async (_, thunkAPI) => {
+    const token = (thunkAPI.getState() as RootStateWithAuth).auth.user.token;
+
     try {
-      const habits = await habitService.getSummary();
+      const habits = await habitService.getSummary(token);
       return habits;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

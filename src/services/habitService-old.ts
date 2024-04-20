@@ -14,11 +14,11 @@ const postHabit = async (data: any) => {
   }
 };
 
-const getSummary = async () => {
-  const config = requestConfig("GET", null);
+const getSummary = async (token: any) => {
+  const config = requestConfig("GET", null, token);
 
   try {
-    const res = await fetch(api + "/summary", config)
+    const res = await fetch(api + "/habit/summary", config)
       .then((res) => res.json())
       .catch((err) => err);
 
@@ -32,7 +32,7 @@ const getHabitDay = async (date: string) => {
   const config = requestConfig("GET", null);
 
   try {
-    const url = new URL(api + "/day");
+    const url = new URL(api + "/habit/day");
     url.searchParams.append("date", date);
 
     const res = await fetch(url.toString(), config);
@@ -48,7 +48,10 @@ const pacthToggleHabit = async (habitId: string, date: string) => {
   const config = requestConfig("PATCH", null);
 
   try {
-    const res = await fetch(api + `/${habitId}/toggle?date=${date}`, config)
+    const res = await fetch(
+      api + `/habit/${habitId}/toggle?date=${date}`,
+      config
+    )
       .then((res) => res.json())
       .catch((err) => err);
 
