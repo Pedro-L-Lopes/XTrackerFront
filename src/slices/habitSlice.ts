@@ -4,15 +4,14 @@ import habitService from "../services/habitService-old";
 // Interfaces
 import { HabitsInfo } from "../interfaces/habits/IHabitsInfo";
 import { Summary } from "../interfaces/habits/ISummary";
+import { useSelector } from "react-redux";
 
 interface User {
   token: string;
-  // Outras propriedades do usuário, se houver
 }
 
 interface AuthState {
   user: User;
-  // Outras propriedades de autenticação, se houver
 }
 
 interface RootStateWithAuth extends RootState {
@@ -62,11 +61,16 @@ export const getSummary = createAsyncThunk(
   async (_, thunkAPI) => {
     const token = (thunkAPI.getState() as RootStateWithAuth).auth.user.token;
 
-    try {
-      const habits = await habitService.getSummary(token);
-      return habits;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+    const userString = localStorage.getItem("user");
+
+    if (userString) {
+      try {
+        const user = JSON.parse(userString);
+        const habits = await habitService.getSummary(user.id, token);
+        return habits;
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error);
+      }
     }
   }
 );
