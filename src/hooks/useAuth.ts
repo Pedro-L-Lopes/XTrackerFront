@@ -9,7 +9,12 @@ export const useAuth = () => {
 
   useEffect(() => {
     if (user) {
-      setAuth(true);
+      if (user.expiration && new Date(user.expiration) > new Date()) {
+        setAuth(true);
+      } else {
+        localStorage.removeItem("user");
+        setAuth(false);
+      }
     } else {
       setAuth(false);
     }

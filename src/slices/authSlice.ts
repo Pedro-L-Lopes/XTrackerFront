@@ -6,20 +6,20 @@ const user = userString ? JSON.parse(userString) : null;
 
 type User = {
   userName: string;
-  email: string;
+  email?: string;
   password: string;
 };
 
 type InitialState = {
   user: User | void;
-  error: boolean;
+  error: any;
   loading: boolean;
   success: boolean;
 };
 
 const initialState: InitialState = {
-  user: user || null,
-  error: false,
+  user: user ? user : null,
+  error: null,
   loading: false,
   success: false,
 };
@@ -27,11 +27,24 @@ const initialState: InitialState = {
 export const registerUser = createAsyncThunk(
   "auth/register",
   async (user: User, thunkAPI) => {
-    const data = await authService.registerUser(user);
+    const data: any = await authService.registerUser(user);
 
-    // if (data.errors) {
-    //   return thunkAPI.rejectWithValue(data.errors[0]);
-    // }
+    if (data.errors) {
+      return thunkAPI.rejectWithValue(data.errors[0]);
+    }
+
+    return data;
+  }
+);
+
+export const loginUser = createAsyncThunk(
+  "auth/login",
+  async (user: User, thunkAPI) => {
+    const data: any = await authService.loginUser(user);
+
+    if (data.errors) {
+      return thunkAPI.rejectWithValue(data.errors[0]);
+    }
 
     return data;
   }
@@ -62,7 +75,23 @@ export const authSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
+        state.error = action.payload;
         state.user = { userName: "", email: "", password: "" };
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+        state.user = action.payload;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.user = { userName: "", password: "" };
       });
   },
 });

@@ -66,7 +66,7 @@ export const getSummary = createAsyncThunk(
     if (userString) {
       try {
         const user = JSON.parse(userString);
-        const habits = await habitService.getSummary(user.id, token);
+        const habits = await habitService.getSummary(user.userId, token);
         return habits;
       } catch (error) {
         return thunkAPI.rejectWithValue(error);
@@ -78,8 +78,10 @@ export const getSummary = createAsyncThunk(
 export const getHabitDay = createAsyncThunk(
   "habits/getHabitDay",
   async (date: string, thunkAPI) => {
+    const token = (thunkAPI.getState() as RootStateWithAuth).auth.user.token;
+
     try {
-      const habits = await habitService.getHabitDay(date);
+      const habits = await habitService.getHabitDay(date, token);
       return habits;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -120,6 +122,16 @@ export const habitSlice = createSlice({
       .addCase(getHabitDay.pending, (state) => {
         state.loading = true;
         state.error = false;
+      })
+      .addCase(getHabitDay.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = false;
+        state.habits = action.payload;
+      })
+      .addCase(getHabitDay.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        // Tratar o erro, se necessário
       });
   },
 });

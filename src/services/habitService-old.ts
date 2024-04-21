@@ -14,7 +14,7 @@ const postHabit = async (data: any) => {
   }
 };
 
-const getSummary = async (userId: string, token: any) => {
+const getSummary = async (userId: string, token: string) => {
   const config = requestConfig("GET", null, token);
 
   try {
@@ -28,8 +28,8 @@ const getSummary = async (userId: string, token: any) => {
   }
 };
 
-const getHabitDay = async (date: string) => {
-  const config = requestConfig("GET", null);
+const getHabitDay = async (date: string, token: string) => {
+  const config = requestConfig("GET", null, token);
 
   try {
     const url = new URL(api + "/habit/day");

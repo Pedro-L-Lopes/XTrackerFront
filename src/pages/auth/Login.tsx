@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
 
 import { useState, useEffect, FormEvent } from "react";
-import { UseSelector, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 
-import { registerUser, reset } from "../../slices/authSlice";
+import { loginUser, reset } from "../../slices/authSlice";
 
 const Register = () => {
   const [userName, setUserName] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useAppDispatch();
@@ -24,17 +23,16 @@ const Register = () => {
 
     const user = {
       userName,
-      email,
       password,
     };
 
     console.log(user);
 
-    dispatch(registerUser(user));
+    dispatch(loginUser(user));
   };
 
   if (error) {
-    return <p>{error}</p>;
+    console.log(error);
   }
 
   useEffect(() => {
@@ -51,13 +49,7 @@ const Register = () => {
           value={userName}
           className="text-black"
         />
-        <input
-          type="text"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-          className="text-black"
-        />
+
         <input
           type="text"
           placeholder="Senha"
@@ -65,9 +57,8 @@ const Register = () => {
           value={password}
           className="text-black"
         />
-        <button>Cadastrar</button>
+        <button>Entrar</button>
       </form>
-      <Link to="/login">Já tem conta? clique aqui</Link>
     </main>
   );
 };

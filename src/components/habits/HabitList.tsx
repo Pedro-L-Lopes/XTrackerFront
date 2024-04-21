@@ -15,6 +15,9 @@ import { HabitsInfo } from "../../interfaces/habits/IHabitsInfo";
 
 // Api
 import { api } from "../../lib/api";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { getHabitDay } from "../../slices/habitSlice";
 
 interface HabitListProps {
   date: Date;
@@ -22,27 +25,41 @@ interface HabitListProps {
 }
 
 const HabitList = ({ date, onCompletedChanged }: HabitListProps) => {
-  const [habitsInfo, setHabitsInfo] = useState<HabitsInfo>();
+  const formattedDate = dayjs(date).format("YYYY-MM-DD");
+
+  const dispatch = useAppDispatch();
+
+  const { habits, loading } = useSelector((state: any) => state.habit);
+
+  const [habitsInfo, setHabitsInfo] = useState<HabitsInfo | null>(null);
+
+  useEffect(() => {
+    if (habits) {
+      setHabitsInfo(habits);
+    }
+  }, [habits]);
 
   console.log(habitsInfo);
 
-  const formattedDate = dayjs(date).format("YYYY-MM-DD");
-
   useEffect(() => {
-    api
-      .get("/day", {
-        params: {
-          date: date.toISOString(),
-        },
-      })
-      .then((response) => {
-        setHabitsInfo(response.data);
-        onCompletedChanged(
-          response.data.completedHabits.length,
-          response.data.possibleHabits.length
-        );
-      });
-  }, []);
+    dispatch(getHabitDay(formattedDate));
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   api
+  //     .get("/day", {
+  //       params: {
+  //         date: date.toISOString(),
+  //       },
+  //     })
+  //     .then((response) => {
+  //       setHabitsInfo(response.data);
+  //       onCompletedChanged(
+  //         response.data.completedHabits.length,
+  //         response.data.possibleHabits.length
+  //       );
+  //     });
+  // }, []);
 
   async function handleToggleHabit(habitId: string) {
     const isHabitAlreadyCompleted =

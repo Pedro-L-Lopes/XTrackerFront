@@ -7,6 +7,7 @@ import "./lib/dayjs";
 // Pages
 import Habits from "./pages/Habits";
 import Register from "./pages/auth/Register";
+import Login from "./pages/auth/Login";
 
 // Components
 import Footer from "./components/Footer";
@@ -28,7 +29,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Sidebar />
+        {/* {auth && <Sidebar />} */}
         <Routes>
           <Route
             path="/"
@@ -37,6 +38,10 @@ function App() {
           <Route
             path="/register"
             element={!auth ? <Register /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/login"
+            element={!auth ? <Login /> : <Navigate to="/" />}
           />
         </Routes>
         <Footer />
