@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 // Api
-import { api } from "../../lib/api";
+import { getHabitMetrics } from "../../services/habitsService";
 
 // Components
 import CircularProgressbar from "../progress/CircularProgressbar";
@@ -32,7 +32,7 @@ const HabitMetrics = ({ id }: Props) => {
 
     const fetchData = async () => {
       try {
-        const response = await api.get(`/${id}/habitmetrics`);
+        const response = await getHabitMetrics(id);
         setDetails(response.data);
       } catch (error) {
         console.log("Error fetching data:", error);

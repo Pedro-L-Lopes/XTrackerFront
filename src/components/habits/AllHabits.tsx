@@ -2,14 +2,17 @@
 import { useState, useEffect } from "react";
 
 // Api
-import { api } from "../../lib/api";
-import { getAllHabits } from "../../services/habitsService";
+import {
+  getAllHabits,
+  deleteHabit as deleteHabitApi,
+} from "../../services/habitsService";
 
 // Icons
 import { CiEdit, CiTrash } from "react-icons/ci";
+import { TbRefresh } from "react-icons/tb";
 
 // Utils
-import { availableWeekDays, availableWeekDaysAbv } from "../../utils/week-days";
+import { availableWeekDays } from "../../utils/week-days";
 
 // Interfaces
 interface Habit {
@@ -30,6 +33,7 @@ const AllHabits = ({ onChangeId }: Props) => {
   const [habits, setHabits] = useState<Habit[]>([]);
   const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
   const [selectedDay, setSelectedDay] = useState<number | null>(8);
+  const [refreshClicked, setRefreshClicked] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,11 +41,11 @@ const AllHabits = ({ onChangeId }: Props) => {
       setHabits(habitsData);
     };
     fetchData();
-  }, []);
+  }, [refreshClicked]);
 
   const deleteHabit = async (id: string) => {
     try {
-      await api.delete(`/${id}`);
+      await deleteHabitApi(id);
       const updatedHabits = habits.filter((habit) => habit.id !== id);
       setHabits(updatedHabits);
     } catch (error) {
@@ -54,6 +58,10 @@ const AllHabits = ({ onChangeId }: Props) => {
     onChangeId(id);
   };
 
+  const handleRefreshClick = () => {
+    setRefreshClicked(!refreshClicked);
+  };
+
   const filteredHabits =
     selectedDay !== 8
       ? habits.filter((habit) => habit.weekDays.includes(selectedDay))
@@ -61,17 +69,22 @@ const AllHabits = ({ onChangeId }: Props) => {
 
   return (
     <main className="flex flex-col overflow-y-auto custom-scrollbar max-h-[500px] md:w-[450px]">
-      <select
-        className="bg-zinc-900 text-xl flex items-center text-center font-bold h-12 focus:outline-none border-b border-violet-600"
-        onChange={(e) => setSelectedDay(Number(e.target.value))}
-      >
-        <option value={8}>Todos os Hábitos</option>
-        {availableWeekDays.map((weekDay, index) => (
-          <option className="text-xl" key={index} value={index}>
-            {weekDay}
-          </option>
-        ))}
-      </select>
+      <div className="flex justify-between items-center mx-10 border-b border-violet-600">
+        <select
+          className="bg-zinc-900 text-xl flex items-center text-center font-bold h-12 focus:outline-none"
+          onChange={(e) => setSelectedDay(Number(e.target.value))}
+        >
+          <option value={8}>Todos os Hábitos</option>
+          {availableWeekDays.map((weekDay, index) => (
+            <option className="text-xl" key={index} value={index}>
+              {weekDay}
+            </option>
+          ))}
+        </select>
+        <button onClick={handleRefreshClick}>
+          <TbRefresh size={24} />
+        </button>
+      </div>
 
       {filteredHabits?.map((habit) => (
         <section
@@ -113,11 +126,11 @@ const AllHabits = ({ onChangeId }: Props) => {
                     <div className="flex justify-between gap-5">
                       <button
                         onClick={() => deleteHabit(habit.id)}
-                        className="p-1 border border-red-500 rounded-md font-bold mt-2 hover:bg-red-500"
+                        className="p-1 rounded-md font-bold mt-2 hover:text-red-500"
                       >
                         SIM
                       </button>
-                      <Popover.Close className="p-1 border border-green-500 rounded-md font-bold mt-2 hover:bg-green-500">
+                      <Popover.Close className="p-1 bg-violet-500 rounded-md font-bold mt-2 hover:bg-violet-400">
                         NÃO
                       </Popover.Close>
                     </div>

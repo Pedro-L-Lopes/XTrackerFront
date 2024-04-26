@@ -11,6 +11,6 @@ if (user && user.token) {
 }
 
 export const api = axios.create({
-  baseURL: "https://localhost:7138/habit",
+  baseURL: "https://localhost:7138",
   headers: headers,
 });

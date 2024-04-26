@@ -9,7 +9,7 @@ import Message from "../message/Message";
 import { FaCheck } from "react-icons/fa6";
 
 // Api
-import { api } from "../../lib/api";
+import { postHabit } from "../../services/habitsService";
 
 // Utils
 import { availableWeekDays } from "../../utils/week-days";
@@ -22,15 +22,20 @@ const NewHabitForm = () => {
     type: "error" | "success";
   } | null>(null);
 
-  async function createNewHabit(event: FormEvent) {
-    event.preventDefault();
+  async function createNewHabit(e: FormEvent) {
+    e.preventDefault();
 
     if (!title || weekDays.length === 0) {
       return;
     }
 
+    const habit = {
+      title: title,
+      weekDays: weekDays,
+    };
+
     try {
-      await api.post("/", { title, weekDays });
+      await postHabit(habit);
       setTitle("");
       setWeekDays([]);
       setMessage({ text: "Hábito criado com sucesso!", type: "success" });
