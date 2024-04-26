@@ -20,6 +20,18 @@ export const getHabitsForDay = async (date: Date) => {
   }
 };
 
+export const patchToggleHabit = async (habitId: string, date: Date) => {
+  try {
+    const response = await api.patch(
+      `/${habitId}/toggle?date=${date.toISOString()}`
+    );
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getAllHabits = async () => {
   try {
     const response = await api.get(`/allhabits?userId=${user.userId}`);

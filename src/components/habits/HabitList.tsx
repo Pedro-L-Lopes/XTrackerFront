@@ -1,10 +1,20 @@
-// HabitList.tsx
+// Hooks
 import { useEffect, useState } from "react";
+
+// Components
 import * as Checkbox from "@radix-ui/react-checkbox";
+
+//  Icons
 import { FaCheck } from "react-icons/fa6";
-import { api } from "../../lib/api";
+
+// Interfaces
 import { HabitsInfo } from "../../interfaces/habits/IHabitsInfo";
-import { getHabitsForDay } from "../../services/habitsService";
+
+// Api
+import {
+  getHabitsForDay,
+  patchToggleHabit,
+} from "../../services/habitsService";
 
 interface HabitListProps {
   date: Date;
@@ -35,7 +45,7 @@ const HabitList = ({ date, onCompletedChanged }: HabitListProps) => {
     const isHabitAlreadyCompleted =
       habitsInfo!.completedHabits.includes(habitId);
 
-    await api.patch(`/${habitId}/toggle?date=${date.toISOString()}`);
+    await patchToggleHabit(habitId, date);
 
     let completedHabits: string[] = [];
 

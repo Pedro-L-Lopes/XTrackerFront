@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import habitService from "../services/habitService-old";
+import habitService from "../services/habitServiceRedux";
 
 // Interfaces
 import { HabitsInfo } from "../interfaces/habits/IHabitsInfo";
