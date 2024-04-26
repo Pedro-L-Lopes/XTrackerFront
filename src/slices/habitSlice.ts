@@ -4,9 +4,9 @@ import habitService from "../services/habitService-old";
 // Interfaces
 import { HabitsInfo } from "../interfaces/habits/IHabitsInfo";
 import { Summary } from "../interfaces/habits/ISummary";
-import { useSelector } from "react-redux";
 
 interface User {
+  userId: string;
   token: string;
 }
 
@@ -31,6 +31,7 @@ interface HabitsState {
   error: boolean;
   loading: boolean;
   success: boolean;
+  message: string | null;
 }
 
 const initialState: HabitsState = {
@@ -41,6 +42,7 @@ const initialState: HabitsState = {
   error: false,
   loading: false,
   success: false,
+  message: null,
 };
 
 export const postHabit = createAsyncThunk(
@@ -80,8 +82,10 @@ export const getHabitDay = createAsyncThunk(
   async (date: string, thunkAPI) => {
     const token = (thunkAPI.getState() as RootStateWithAuth).auth.user.token;
 
+    const userId = (thunkAPI.getState() as RootStateWithAuth).auth.user.userId;
+
     try {
-      const habits = await habitService.getHabitDay(date, token);
+      const habits = await habitService.getHabitDay(date, userId, token);
       return habits;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -92,10 +96,12 @@ export const getHabitDay = createAsyncThunk(
 export const pacthToggleHabit = createAsyncThunk(
   "habits/pacthToggleHabit",
   async (data: { habitId: string; date: string }, thunkAPI) => {
+    const token = (thunkAPI.getState() as RootStateWithAuth).auth.user.token;
     try {
       const habits = await habitService.pacthToggleHabit(
         data.habitId,
-        data.date
+        data.date,
+        token
       );
       return habits;
     } catch (error) {
@@ -126,12 +132,33 @@ export const habitSlice = createSlice({
       .addCase(getHabitDay.fulfilled, (state, action) => {
         state.loading = false;
         state.error = false;
-        state.habits = action.payload;
+        state.habitsInfo = action.payload;
+        console.log(action.payload);
       })
       .addCase(getHabitDay.rejected, (state, action) => {
         state.loading = false;
         state.error = true;
-        // Tratar o erro, se necessário
+      })
+      .addCase(pacthToggleHabit.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(pacthToggleHabit.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = false;
+        state.message = action.payload;
+        // state.products.map((product) => {
+        //   if (product._id === action.payload.product._id) {
+        //     return (product.name = action.payload.product.name);
+        //   }
+        //   return product;
+        // });
+      })
+      .addCase(pacthToggleHabit.rejected, (state, action) => {
+        state.loading = false;
+        state.error = true;
+        state.habit = {};
       });
   },
 });

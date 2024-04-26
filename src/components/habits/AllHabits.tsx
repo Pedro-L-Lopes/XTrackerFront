@@ -31,8 +31,6 @@ const AllHabits = ({ onChangeId }: Props) => {
   const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
   const [selectedDay, setSelectedDay] = useState<number | null>(8);
 
-  console.log(habits);
-
   useEffect(() => {
     const fetchData = async () => {
       const habitsData = await getAllHabits();
@@ -55,12 +53,6 @@ const AllHabits = ({ onChangeId }: Props) => {
     setSelectedHabitId(id);
     onChangeId(id);
   };
-
-  // const renderWeekDays = (habit: Habit) =>
-  //   habit.weekDays
-  //     .map((dayIndex) => availableWeekDaysAbv[Number(dayIndex)])
-  //     .filter(Boolean)
-  //     .join(", ");
 
   const filteredHabits =
     selectedDay !== 8

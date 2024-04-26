@@ -1,23 +1,10 @@
-// Hooks
+// HabitList.tsx
 import { useEffect, useState } from "react";
-
-// Components
 import * as Checkbox from "@radix-ui/react-checkbox";
-
-// Icons
 import { FaCheck } from "react-icons/fa6";
-
-// Libs
-import dayjs from "dayjs";
-
-// Interfaces
-import { HabitsInfo } from "../../interfaces/habits/IHabitsInfo";
-
-// Api
 import { api } from "../../lib/api";
-import { useSelector } from "react-redux";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { getHabitDay } from "../../slices/habitSlice";
+import { HabitsInfo } from "../../interfaces/habits/IHabitsInfo";
+import { getHabitsForDay } from "../../services/habitsService";
 
 interface HabitListProps {
   date: Date;
@@ -25,47 +12,30 @@ interface HabitListProps {
 }
 
 const HabitList = ({ date, onCompletedChanged }: HabitListProps) => {
-  const formattedDate = dayjs(date).format("YYYY-MM-DD");
-
-  const dispatch = useAppDispatch();
-
-  const { habits, loading } = useSelector((state: any) => state.habit);
-
-  const [habitsInfo, setHabitsInfo] = useState<HabitsInfo | null>(null);
+  const [habitsInfo, setHabitsInfo] = useState<HabitsInfo>();
 
   useEffect(() => {
-    if (habits) {
-      setHabitsInfo(habits);
-    }
-  }, [habits]);
+    const fetchData = async () => {
+      try {
+        const habitsData = await getHabitsForDay(date);
+        setHabitsInfo(habitsData);
+        onCompletedChanged(
+          habitsData.completedHabits.length,
+          habitsData.possibleHabits.length
+        );
+      } catch (error) {
+        console.error("Erro ao buscar hábitos para o dia:", error);
+      }
+    };
 
-  console.log(habitsInfo);
-
-  useEffect(() => {
-    dispatch(getHabitDay(formattedDate));
-  }, [dispatch]);
-
-  // useEffect(() => {
-  //   api
-  //     .get("/day", {
-  //       params: {
-  //         date: date.toISOString(),
-  //       },
-  //     })
-  //     .then((response) => {
-  //       setHabitsInfo(response.data);
-  //       onCompletedChanged(
-  //         response.data.completedHabits.length,
-  //         response.data.possibleHabits.length
-  //       );
-  //     });
-  // }, []);
+    fetchData();
+  }, []);
 
   async function handleToggleHabit(habitId: string) {
     const isHabitAlreadyCompleted =
       habitsInfo!.completedHabits.includes(habitId);
 
-    await api.patch(`/${habitId}/toggle?date=${formattedDate}`);
+    await api.patch(`/${habitId}/toggle?date=${date.toISOString()}`);
 
     let completedHabits: string[] = [];
 
@@ -90,7 +60,7 @@ const HabitList = ({ date, onCompletedChanged }: HabitListProps) => {
 
   return (
     <div className="mt-6 flex flex-col gap-3">
-      {habitsInfo?.possibleHabits.map((habit) => (
+      {habitsInfo?.possibleHabits.map((habit: any) => (
         <Checkbox.Root
           key={habit.id}
           onCheckedChange={() => handleToggleHabit(habit.id)}
@@ -99,7 +69,7 @@ const HabitList = ({ date, onCompletedChanged }: HabitListProps) => {
         >
           <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2 border-zinc-800 group-data-[state=checked]:bg-green-500 group-data-[state=checked]:border-green-50 transition-colors group-focus:ring-2 group-focus:ring-violet-600 group-focus:ring-offset-2 group-focus:ring-offset-background">
             <Checkbox.Indicator>
-              <FaCheck size={20} className="text-white" />
+              <FaCheck size={20} className="text-white flex" />
             </Checkbox.Indicator>
           </div>
           <span

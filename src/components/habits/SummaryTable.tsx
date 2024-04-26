@@ -39,14 +39,12 @@ const SummaryTable = () => {
 
   const { summary, loading } = useSelector((state: any) => state.habit);
 
-  console.log(summary);
-
   useEffect(() => {
     dispatch(getSummary());
   }, [dispatch]);
 
   if (loading) {
-    return <p>Carregando...</p>;
+    return <p>Carregando... </p>;
   }
 
   return (

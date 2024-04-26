@@ -28,12 +28,13 @@ const getSummary = async (userId: string, token: string) => {
   }
 };
 
-const getHabitDay = async (date: string, token: string) => {
+const getHabitDay = async (date: string, userId: string, token: string) => {
   const config = requestConfig("GET", null, token);
 
   try {
     const url = new URL(api + "/habit/day");
     url.searchParams.append("date", date);
+    url.searchParams.append("userId", userId);
 
     const res = await fetch(url.toString(), config);
     const data = await res.json();
@@ -44,8 +45,12 @@ const getHabitDay = async (date: string, token: string) => {
   }
 };
 
-const pacthToggleHabit = async (habitId: string, date: string) => {
-  const config = requestConfig("PATCH", null);
+const pacthToggleHabit = async (
+  habitId: string,
+  date: string,
+  token: string
+) => {
+  const config = requestConfig("PATCH", null, token);
 
   try {
     const res = await fetch(
