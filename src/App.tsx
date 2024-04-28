@@ -29,11 +29,11 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        {/* {auth && <Sidebar />} */}
+        {auth && <Sidebar />}
         <Routes>
           <Route
             path="/"
-            element={auth ? <Habits /> : <Navigate to="register" />}
+            element={auth ? <Habits /> : <Navigate to="/register" />}
           />
           <Route
             path="/register"

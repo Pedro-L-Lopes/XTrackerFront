@@ -30,17 +30,24 @@ const loginUser = async (data: User) => {
       res.json().catch((err) => err)
     );
 
-    if (res) {
+    if (res.token) {
       localStorage.setItem("user", JSON.stringify(res));
     }
+
+    return res;
   } catch (error) {
     console.log(error);
   }
 };
 
+const logout = () => {
+  localStorage.removeItem("user");
+};
+
 const authService = {
   registerUser,
   loginUser,
+  logout,
 };
 
 export default authService;

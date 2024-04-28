@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useState, useEffect, FormEvent } from "react";
 import { UseSelector, useSelector } from "react-redux";
@@ -12,6 +12,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
 
   const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
 
   const { loading, error } = useSelector((state: any) => state.auth);
 
@@ -31,6 +33,7 @@ const Register = () => {
     console.log(user);
 
     dispatch(registerUser(user));
+    navigate("/");
   };
 
   if (error) {
