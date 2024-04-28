@@ -1,7 +1,6 @@
 // Hooks
 import { useState, useEffect, FormEvent } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 // Redux
 import { useSelector } from "react-redux";
@@ -22,7 +21,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const { loading, error } = useSelector((state: any) => state.auth);
 
@@ -56,7 +54,6 @@ const Login = () => {
       </section>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-        <h2 className="text-center bg-red-500 rounded-sm">{error}</h2>
         <div className="mb-2">
           <h1 className="text-3xl font-bold">Já tem cadastro?</h1>
           <h2>Faça seu login e acompanhe seu progresso</h2>
@@ -100,8 +97,6 @@ const Login = () => {
           value={loading ? "AGUARDE" : "ENTRAR"}
         />
 
-        {error && <Message text={error} type="error" />}
-
         <div className="flex justify-between items-center">
           <Link
             to="/forget"
@@ -117,6 +112,7 @@ const Login = () => {
           </Link>
         </div>
       </form>
+      {error && <Message text={error} type={"error"} />}
     </main>
   );
 };

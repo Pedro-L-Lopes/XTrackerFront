@@ -20,7 +20,7 @@ const Message: React.FC<MessageProps> = ({ text, type }) => {
     <>
       {isVisible && (
         <div
-          className={`fixed top-0 left-0 m-4 p-4 rounded-md ${
+          className={`fixed top-0 m-4 p-4 rounded-md ${
             type === "error" ? "bg-red-500" : "bg-green-500"
           } text-white`}
         >

@@ -29,8 +29,8 @@ export const registerUser = createAsyncThunk(
   async (user: User, thunkAPI) => {
     const data: any = await authService.registerUser(user);
 
-    if (data.errors) {
-      return thunkAPI.rejectWithValue(data.errors[0]);
+    if (data.status) {
+      return thunkAPI.rejectWithValue(data.message);
     }
 
     return data;
@@ -95,7 +95,6 @@ export const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        console.log(action.payload);
         state.user = { userName: "", password: "" };
       })
       .addCase(logout.fulfilled, (state) => {

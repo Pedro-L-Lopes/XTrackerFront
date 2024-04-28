@@ -27,7 +27,7 @@ import { getSummary } from "../../slices/habitSlice";
 
 const summaryDates = generateDatesFromYearBeginning();
 
-const minimumSummaryDatesSize = 18 * 7;
+const minimumSummaryDatesSize = 15 * 7;
 const amountOfDaysToFill = minimumSummaryDatesSize - summaryDates.length;
 
 type SummaryTableProps = {
@@ -50,7 +50,6 @@ const SummaryTable = () => {
   return (
     <div className="overflow-x-scroll p-1 custom-scrollbar">
       <div className="w-full flex">
-        {/* Header */}
         <div className="grid grid-rows-7 grid-flow-row gap-3">
           {weekDays.map((weekDay, index) => (
             <div
@@ -61,10 +60,8 @@ const SummaryTable = () => {
             </div>
           ))}
         </div>
-        {/* Day square */}
         <div className="grid grid-rows-7 grid-flow-col gap-3">
           {summary &&
-            summary.length > 0 &&
             summaryDates.map((date) => {
               const dayInSummary = summary.find((day: any) => {
                 return dayjs(date).isSame(day.date, "day");
