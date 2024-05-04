@@ -24,12 +24,10 @@ const Login = () => {
 
   const { loading, error } = useSelector((state: any) => state.auth);
 
-  console.log(error);
-
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const user = { userName, password };
-    dispatch(loginUser(user));
+    await dispatch(loginUser(user));
   };
 
   useEffect(() => {

@@ -49,14 +49,12 @@ export const patchToggleHabit = async (habitId: string, date: Date) => {
 };
 
 export const getAllHabits = async () => {
-  if (user.userId != null) {
-    try {
-      const response = await api.get(`/habit/allhabits?userId=${user.userId}`);
-      return response.data;
-    } catch (error) {
-      console.log("Error", error);
-      throw error;
-    }
+  try {
+    const response = await api.get(`/habit/allhabits?userId=${user.userId}`);
+    return response.data;
+  } catch (error) {
+    console.log("Error", error);
+    throw error;
   }
 };
 

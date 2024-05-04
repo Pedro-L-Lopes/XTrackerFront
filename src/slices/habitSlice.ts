@@ -80,12 +80,14 @@ export const getSummary = createAsyncThunk(
 export const getHabitDay = createAsyncThunk(
   "habits/getHabitDay",
   async (date: string, thunkAPI) => {
-    const token = (thunkAPI.getState() as RootStateWithAuth).auth.user.token;
-
-    const userId = (thunkAPI.getState() as RootStateWithAuth).auth.user.userId;
+    const data = (thunkAPI.getState() as RootStateWithAuth).auth.user;
 
     try {
-      const habits = await habitService.getHabitDay(date, userId, token);
+      const habits = await habitService.getHabitDay(
+        date,
+        data.userId,
+        data.token
+      );
       return habits;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

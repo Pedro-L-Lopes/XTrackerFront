@@ -30,7 +30,7 @@ const Home = () => {
   const menus = [
     { name: "Meu perfil", link: "/", icon: AiOutlineUser },
     { name: "Dashboard", link: "/", icon: MdOutlineDashboard, margin: true },
-    { name: "Hábitos", link: "/", icon: BsClipboardData },
+    { name: "Hábitos", link: "/habits", icon: BsClipboardData },
     { name: "Tarefas", link: "/", icon: BiTask },
     { name: "Treinos", link: "/", icon: LiaDumbbellSolid },
     { name: "Finanças", link: "/", icon: BsGraphUpArrow },

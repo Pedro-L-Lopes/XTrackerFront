@@ -32,16 +32,16 @@ function App() {
         {auth && <Sidebar />}
         <Routes>
           <Route
-            path="/"
-            element={auth ? <Habits /> : <Navigate to="/register" />}
+            path="/habits"
+            element={auth ? <Habits /> : <Navigate to="/login" />}
           />
           <Route
             path="/register"
-            element={!auth ? <Register /> : <Navigate to="/" />}
+            element={!auth ? <Register /> : <Navigate to="/habits" />}
           />
           <Route
             path="/login"
-            element={!auth ? <Login /> : <Navigate to="/" />}
+            element={!auth ? <Login /> : <Navigate to="/habits" />}
           />
         </Routes>
         <Footer />

@@ -1,27 +1,32 @@
-// Hooks
-import { useEffect, useState } from "react";
-
-// Components
+import { useEffect } from "react";
 import Header from "../components/habits/Header";
 import SummaryTable from "../components/habits/SummaryTable";
 import HabitMetrics from "../components/habits/HabitsAndMetrics";
-
-// Api
-import { api } from "../lib/api";
+import { useAuth } from "../hooks/useAuth";
 
 const Habits = () => {
-  // useEffect(() => {
-  //   api.get("/summary").then((response) => {
-  //     settSummary(response.data);
-  //   });
-  // }, []);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    const reload = localStorage.getItem("reload");
+    if (!reload || reload === "false") {
+      localStorage.setItem("reload", "true");
+      window.location.reload();
+    }
+  }, []);
 
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="w-full max-w-5xl px-6 flex flex-col gap-2">
-        <Header />
-        <SummaryTable />
-        <HabitMetrics />
+        {user.userId != undefined ? (
+          <>
+            <Header />
+            <SummaryTable />
+            <HabitMetrics />
+          </>
+        ) : (
+          <p>Carregando</p>
+        )}
       </div>
     </div>
   );
