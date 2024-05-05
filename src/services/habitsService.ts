@@ -48,6 +48,18 @@ export const patchToggleHabit = async (habitId: string, date: Date) => {
   }
 };
 
+export const editHabit = async (habitId: string, newTitle: string) => {
+  try {
+    const response = await api.put(`/habit/${habitId}/edit`, {
+      title: newTitle,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getAllHabits = async () => {
   try {
     const response = await api.get(`/habit/allhabits?userId=${user.userId}`);

@@ -5,10 +5,12 @@ import { useState, useEffect } from "react";
 import {
   getAllHabits,
   deleteHabit as deleteHabitApi,
+  editHabit,
 } from "../../services/habitsService";
 
 // Icons
 import { CiEdit, CiTrash } from "react-icons/ci";
+import { IoCheckmark } from "react-icons/io5";
 import { TbRefresh } from "react-icons/tb";
 
 // Utils
@@ -34,6 +36,8 @@ const AllHabits = ({ onChangeId }: Props) => {
   const [selectedHabitId, setSelectedHabitId] = useState<string | null>(null);
   const [selectedDay, setSelectedDay] = useState<number | null>(8);
   const [refreshClicked, setRefreshClicked] = useState<boolean>(false);
+  const [editingHabitId, setEditingHabitId] = useState<string | null>(null);
+  const [editingTitleText, setEditingTitleText] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,6 +48,20 @@ const AllHabits = ({ onChangeId }: Props) => {
     };
     fetchData();
   }, [refreshClicked]);
+
+  const handleEditTitle = async (habitId: string) => {
+    try {
+      await editHabit(habitId, editingTitleText);
+      const updatedHabits = habits.map((habit) =>
+        habit.id === habitId ? { ...habit, title: editingTitleText } : habit
+      );
+      setHabits(updatedHabits);
+      setEditingHabitId(null);
+      setEditingTitleText("");
+    } catch (error) {
+      console.log("Error editing habit title:", error);
+    }
+  };
 
   const deleteHabit = async (id: string) => {
     try {
@@ -68,8 +86,6 @@ const AllHabits = ({ onChangeId }: Props) => {
     selectedDay !== 8
       ? habits.filter((habit) => habit.weekDays.includes(selectedDay))
       : habits;
-
-  console.log(filteredHabits);
 
   return (
     <main className="flex flex-col overflow-y-auto custom-scrollbar max-h-[500px] md:w-[450px]">
@@ -104,13 +120,35 @@ const AllHabits = ({ onChangeId }: Props) => {
               className={`flex flex-col p-2 justify-center cursor-pointer rounded-sm mr-2 w-52`}
               onClick={() => handleHabitClick(habit.id)}
             >
-              <p className="text-lg font-bold truncate">{habit.title}</p>
+              {editingHabitId === habit.id ? (
+                <input
+                  type="text"
+                  value={editingTitleText}
+                  onChange={(e) => setEditingTitleText(e.target.value)}
+                  className="bg-transparent text-white text-lg font-bold truncate border-b focus:outline-none"
+                />
+              ) : (
+                <p className="text-lg font-bold truncate">{habit.title}</p>
+              )}
             </div>
             <div>
-              <CiEdit
-                size={30}
-                className="hover:text-violet-100 cursor-pointer "
-              />
+              {editingHabitId === habit.id ? (
+                <button
+                  onClick={() => handleEditTitle(habit.id)}
+                  className="hover:text-violet-100 cursor-pointer hover:opacity-80"
+                >
+                  <IoCheckmark size={30} />
+                </button>
+              ) : (
+                <CiEdit
+                  size={30}
+                  className="hover:text-violet-100 cursor-pointer"
+                  onClick={() => {
+                    setEditingHabitId(habit.id);
+                    setEditingTitleText(habit.title);
+                  }}
+                />
+              )}
             </div>
             <div>
               <Popover.Root>
