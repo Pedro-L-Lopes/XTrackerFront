@@ -13,6 +13,7 @@ export const useAuth = () => {
         setAuth(true);
       } else {
         localStorage.removeItem("user");
+        localStorage.removeItem("reload");
         setAuth(false);
       }
     } else {

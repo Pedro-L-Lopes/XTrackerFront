@@ -68,7 +68,7 @@ const Login = () => {
             placeholder="Nome de usuário"
             onChange={(e) => setUserName(e.target.value)}
             value={userName}
-            className="p-2 w-full flex bg-transparent placeholder:text-white outline-none"
+            className="p-2 w-full flex bg-transparent placeholder:text-white outline-none "
             required
           />
         </label>

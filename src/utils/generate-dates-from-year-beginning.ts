@@ -1,13 +1,32 @@
 import dayjs from "dayjs";
 
-export function generateDatesFromYearBeginning() {
-  const firstDayOfTheYear = dayjs().startOf("year").subtract(1, "day");
-  const today = new Date();
+// FIX: Last day of the year not loading - Fix in the future
+export function generateDatesFromYearBeginning(year: string) {
+  const currentYear = dayjs().year();
+  const specifiedYear = parseInt(year);
+
+  const firstDayOfTheYear = dayjs(`${year}-01-01`);
+  const firstSundayOfTheYear = firstDayOfTheYear.startOf("week");
+
+  // If the first day of the year is not a Sunday, adjust to the previous Sunday
+  if (firstSundayOfTheYear.date() !== 1) {
+    firstSundayOfTheYear.subtract(7, "day");
+  }
+
+  const today = dayjs(); // Get the current date
 
   const dates = [];
-  let compareDate = firstDayOfTheYear;
+  let compareDate = firstSundayOfTheYear;
 
-  while (compareDate.isBefore(today)) {
+  while (compareDate.isBefore(today) || compareDate.isSame(today, "day")) {
+    // If it's the current year, i.e., a future year, limit to the current date
+    // If it's a past year, continue until the last day of the specified year
+    if (specifiedYear === currentYear || specifiedYear < currentYear) {
+      const lastDayOfYear = dayjs(`${specifiedYear}-12-31`);
+      if (compareDate.isSame(lastDayOfYear, "day")) {
+        break; // Exit the loop when reaching the last day of the specified year
+      }
+    }
     dates.push(compareDate.toDate());
     compareDate = compareDate.add(1, "day");
   }
@@ -16,6 +35,21 @@ export function generateDatesFromYearBeginning() {
 }
 
 // import dayjs from "dayjs";
+
+// export function generateDatesFromYearBeginning() {
+//   const firstDayOfTheYear = dayjs().startOf("year").subtract(1, "day");
+//   const today = new Date();
+
+//   const dates = [];
+//   let compareDate = firstDayOfTheYear;
+
+//   while (compareDate.isBefore(today)) {
+//     dates.push(compareDate.toDate());
+//     compareDate = compareDate.add(1, "day");
+//   }
+
+//   return dates;
+// }
 
 // export function generateDatesFromYearBeginning() {
 //   // Defina a data para o primeiro dia de 2023
@@ -34,8 +68,6 @@ export function generateDatesFromYearBeginning() {
 
 //   return dates;
 // }
-
-// import dayjs from "dayjs";
 
 // export function generateDatesFromYearBeginning(
 //   startYear: number,

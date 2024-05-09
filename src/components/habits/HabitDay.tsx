@@ -2,7 +2,7 @@
 import "../../styles/scrollBar.css";
 
 // Hooks
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // Components
 import * as Popover from "@radix-ui/react-popover";
@@ -12,6 +12,9 @@ import HabitList from "./HabitList";
 // Libs
 import dayjs from "dayjs";
 import clsx from "clsx";
+
+// Icons
+import { BsAppIndicator } from "react-icons/bs";
 
 // Interface
 import { HabitDayProps } from "../../interfaces/habits/HabitDayProps";
@@ -29,9 +32,10 @@ const HabitDay = ({
 
   const dayAndMonth = dayjs(date).format("DD/MM");
   const dayOfWeek = dayjs(date).format("dddd");
+  const isToday = dayjs(date).isSame(dayjs(), "day");
 
   const classes = clsx(
-    "w-10 h-10 border-2 border-zinc-800 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-violet-600 focus:ring-offset-background",
+    "w-10 h-10 border-2 rounded-lg border-zinc-800 transition-colors focus:outline-none focus:ring-2 focus:ring-violet-600 focus:ring-offset-background text-sm text-zinc-500 flex items-center justify-center",
     {
       "bg-zinc-900 border-zinc-800": completedPercentage === 0,
       "bg-violet-900 border-violet-500":
@@ -54,7 +58,9 @@ const HabitDay = ({
 
   return (
     <Popover.Root>
-      <Popover.Trigger className={classes} />
+      <Popover.Trigger className={classes}>
+        {isToday ? <BsAppIndicator /> : ""}
+      </Popover.Trigger>
 
       <Popover.Portal>
         <Popover.Content className="min-w-[320px] max-h-[330px] p-6 rounded-2xl bg-zinc-900 flex flex-col overflow-y-auto custom-scrollbar">

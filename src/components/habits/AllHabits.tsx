@@ -26,6 +26,11 @@ interface Habit {
 
 // Components
 import * as Popover from "@radix-ui/react-popover";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+} from "@radix-ui/react-tooltip";
 
 type Props = {
   onChangeId: (id: string) => void;
@@ -101,9 +106,16 @@ const AllHabits = ({ onChangeId }: Props) => {
             </option>
           ))}
         </select>
-        <button onClick={handleRefreshClick}>
-          <TbRefresh size={24} />
-        </button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipContent sideOffset={5} side="top" align="center">
+              Clique para atualizar
+            </TooltipContent>
+            <button onClick={handleRefreshClick}>
+              <TbRefresh size={24} />
+            </button>
+          </Tooltip>
+        </TooltipProvider>
       </div>
 
       {filteredHabits.length > 0 ? (
