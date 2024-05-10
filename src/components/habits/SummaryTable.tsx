@@ -12,6 +12,7 @@ import HabitDay from "./HabitDay";
 
 // Libs
 import dayjs from "dayjs";
+import { generateYearForUser } from "../../utils/generate-year-for-user";
 import { generateDatesFromYearBeginning } from "../../utils/generate-dates-from-year-beginning";
 
 // Utils
@@ -26,6 +27,7 @@ const currentYear = new Date().getFullYear();
 
 const SummaryTable = () => {
   const [selectedYear, setSelectedYear] = useState(currentYear.toString());
+  const [years, setYears] = useState<number[]>();
 
   const summaryDates = generateDatesFromYearBeginning(selectedYear).map(
     (dateString) => new Date(dateString)
@@ -42,7 +44,9 @@ const SummaryTable = () => {
     dispatch(getSummary(selectedYear));
   }, [dispatch, selectedYear]);
 
-  console.log(summary);
+  useEffect(() => {
+    setYears(generateYearForUser().reverse());
+  }, []);
 
   if (loading) {
     return <p>Carregando... </p>;
@@ -94,27 +98,17 @@ const SummaryTable = () => {
           className="appearance-none bg-transparent border border-violet-500 rounded-md py-2 px-4 text-violet-500 leading-tight focus:outline-none focus:border-violet-700 cursor-pointer font-bold"
           onChange={(e) => setSelectedYear(e.target.value)}
         >
-          <option
-            className="font-bold"
-            value={currentYear.toString()}
-            selected={selectedYear === currentYear.toString()}
-          >
-            {currentYear.toString()}
-          </option>
-          <option
-            className="font-bold"
-            value="2023"
-            selected={selectedYear === "2023"}
-          >
-            2023
-          </option>
-          <option
-            className="font-bold"
-            value="2022"
-            selected={selectedYear === "2022"}
-          >
-            2022
-          </option>
+          {years &&
+            years.map((year) => (
+              <option
+                key={year}
+                className="font-bold"
+                value={year.toString()}
+                selected={selectedYear === year.toString()}
+              >
+                {year}
+              </option>
+            ))}
         </select>
 
         <img src={lessMore} className="mt-2" />
