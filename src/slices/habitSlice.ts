@@ -60,7 +60,7 @@ export const postHabit = createAsyncThunk(
 
 export const getSummary = createAsyncThunk(
   "habits/getSummary",
-  async (_, thunkAPI) => {
+  async (year: string, thunkAPI) => {
     const token = (thunkAPI.getState() as RootStateWithAuth).auth.user.token;
 
     const userString = localStorage.getItem("user");
@@ -68,7 +68,7 @@ export const getSummary = createAsyncThunk(
     if (userString) {
       try {
         const user = JSON.parse(userString);
-        const habits = await habitService.getSummary(user.userId, token);
+        const habits = await habitService.getSummary(user.userId, year, token);
         return habits;
       } catch (error) {
         return thunkAPI.rejectWithValue(error);

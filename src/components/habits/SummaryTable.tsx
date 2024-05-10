@@ -9,7 +9,6 @@ import lessMore from "../../assets/lessMore.svg";
 
 // Components
 import HabitDay from "./HabitDay";
-import { Select } from "@radix-ui/react-select";
 
 // Libs
 import dayjs from "dayjs";
@@ -31,6 +30,7 @@ const SummaryTable = () => {
   const summaryDates = generateDatesFromYearBeginning(selectedYear).map(
     (dateString) => new Date(dateString)
   );
+
   const minimumSummaryDatesSize = 15 * 7;
   const amountOfDaysToFill = minimumSummaryDatesSize - summaryDates.length;
 
@@ -39,8 +39,10 @@ const SummaryTable = () => {
   const { summary, loading } = useSelector((state: any) => state.habit);
 
   useEffect(() => {
-    dispatch(getSummary());
-  }, [dispatch]);
+    dispatch(getSummary(selectedYear));
+  }, [dispatch, selectedYear]);
+
+  console.log(summary);
 
   if (loading) {
     return <p>Carregando... </p>;
@@ -92,13 +94,25 @@ const SummaryTable = () => {
           className="appearance-none bg-transparent border border-violet-500 rounded-md py-2 px-4 text-violet-500 leading-tight focus:outline-none focus:border-violet-700 cursor-pointer font-bold"
           onChange={(e) => setSelectedYear(e.target.value)}
         >
-          <option className="font-bold" value={currentYear.toString()}>
+          <option
+            className="font-bold"
+            value={currentYear.toString()}
+            selected={selectedYear === currentYear.toString()}
+          >
             {currentYear.toString()}
           </option>
-          <option className="font-bold" value="2023">
+          <option
+            className="font-bold"
+            value="2023"
+            selected={selectedYear === "2023"}
+          >
             2023
           </option>
-          <option className="font-bold" value="2022">
+          <option
+            className="font-bold"
+            value="2022"
+            selected={selectedYear === "2022"}
+          >
             2022
           </option>
         </select>

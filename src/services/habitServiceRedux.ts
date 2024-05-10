@@ -14,11 +14,14 @@ const postHabit = async (data: any) => {
   }
 };
 
-const getSummary = async (userId: string, token: string) => {
+const getSummary = async (userId: string, year: string, token: string) => {
   const config = requestConfig("GET", null, token);
 
   try {
-    const res = await fetch(api + "/habit/summary?userid=" + userId, config)
+    const res = await fetch(
+      api + "/habit/summary?userid=" + userId + "&year=" + year,
+      config
+    )
       .then((res) => res.json())
       .catch((err) => err);
 
