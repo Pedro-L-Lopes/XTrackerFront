@@ -6,6 +6,11 @@ type User = {
   password: string;
 };
 
+type UserLogin = {
+  email: string;
+  password: string;
+};
+
 const registerUser = async (data: User) => {
   const config = requestConfig("POST", data, null);
 
@@ -24,7 +29,7 @@ const registerUser = async (data: User) => {
   }
 };
 
-const loginUser = async (data: User) => {
+const loginUser = async (data: UserLogin) => {
   const config = requestConfig("POST", data, null);
 
   try {

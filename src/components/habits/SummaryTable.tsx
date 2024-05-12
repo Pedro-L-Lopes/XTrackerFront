@@ -48,9 +48,18 @@ const SummaryTable = () => {
     setYears(generateYearForUser().reverse());
   }, []);
 
+  useEffect(() => {
+    const container = document.querySelector(".custom-scrollbar");
+    if (container) {
+      container.scrollLeft = container.scrollWidth - container.clientWidth;
+    }
+  }, [summary]);
+
   if (loading) {
     return <p>Carregando... </p>;
   }
+
+  console.log(summary);
 
   return (
     <main>

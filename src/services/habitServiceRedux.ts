@@ -25,7 +25,7 @@ const getSummary = async (userId: string, year: string, token: string) => {
       .then((res) => res.json())
       .catch((err) => err);
 
-    return res;
+    return res; 
   } catch (error) {
     console.log(error);
   }

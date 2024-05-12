@@ -10,6 +10,11 @@ type User = {
   password: string;
 };
 
+type UserLogin = {
+  email: string;
+  password: string;
+};
+
 type InitialState = {
   user: User | void;
   error: any;
@@ -39,7 +44,7 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   "auth/login",
-  async (user: User, thunkAPI) => {
+  async (user: UserLogin, thunkAPI) => {
     const data: any = await authService.loginUser(user);
 
     if (data.status === "Error") {

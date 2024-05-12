@@ -21,6 +21,21 @@ export const postHabit = async (data: {
   }
 };
 
+export const getSummary = async (year: string) => {
+  try {
+    const response = await api.get("/habit/summary", {
+      params: {
+        userId: user.userId,
+        year: year,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getHabitsForDay = async (date: Date) => {
   try {
     const response = await api.get("/habit/day", {

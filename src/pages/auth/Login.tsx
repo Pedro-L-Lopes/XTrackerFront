@@ -17,7 +17,7 @@ import logo from "../../assets/Logo.svg";
 import Message from "../../components/message/Message";
 
 const Login = () => {
-  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useAppDispatch();
@@ -26,13 +26,15 @@ const Login = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const user = { userName, password };
+    const user = { email, password };
     await dispatch(loginUser(user));
   };
 
   useEffect(() => {
     dispatch(reset());
   }, [dispatch]);
+
+  console.log(error);
 
   return (
     <main
@@ -50,7 +52,6 @@ const Login = () => {
           </p>
         </div>
       </section>
-
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
         <div className="mb-2">
           <h1 className="text-3xl font-bold">Já tem cadastro?</h1>
@@ -59,15 +60,15 @@ const Login = () => {
 
         <label
           className={`flex items-center bg-white bg-opacity-5 border rounded-md ${
-            error && error.includes("Usuário") ? "border-red-500" : ""
+            error && error.includes("Email") ? "border-red-500" : ""
           }`}
         >
           <RiUser3Line className="ml-2" />
           <input
-            type="text"
-            placeholder="Nome de usuário"
-            onChange={(e) => setUserName(e.target.value)}
-            value={userName}
+            type="email"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
             className="p-2 w-full flex bg-transparent placeholder:text-white outline-none "
             required
           />
