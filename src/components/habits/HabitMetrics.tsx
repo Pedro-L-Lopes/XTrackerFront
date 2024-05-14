@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { getHabitMetrics } from "../../services/habitsService";
 
 // Components
-import CircularProgressbar from "../progress/CircularProgressbar";
+import CircularProgressbar from "../utils/progress/CircularProgressbar";
 
 // Interfaces
 import { IHMetrics } from "../../interfaces/habits/IHMetrics";

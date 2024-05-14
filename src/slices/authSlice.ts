@@ -16,7 +16,7 @@ type UserLogin = {
 };
 
 type InitialState = {
-  user: User | void;
+  user: User | void | null;
   error: any;
   loading: boolean;
   success: boolean;

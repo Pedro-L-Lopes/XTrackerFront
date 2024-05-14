@@ -1,4 +1,5 @@
 import { api, requestConfig } from "../lib/config";
+import Cookies from "js-cookie";
 
 type User = {
   userName: string;
@@ -19,8 +20,16 @@ const registerUser = async (data: User) => {
       res.json().catch((err) => err)
     );
 
-    if (res) {
-      localStorage.setItem("user", JSON.stringify(res));
+    if (res && res.token) {
+      const userData = JSON.stringify({
+        userName: res.userName,
+        expiration: res.expiration,
+        createdAt: res.createdAt,
+      });
+
+      localStorage.setItem("user", userData);
+      Cookies.set("token", res.token, { expires: 7 });
+      Cookies.set("id", res.userId, { expires: 7 });
     }
 
     return res;
@@ -37,8 +46,16 @@ const loginUser = async (data: UserLogin) => {
       res.json().catch((err) => err)
     );
 
-    if (res.token) {
-      localStorage.setItem("user", JSON.stringify(res));
+    if (res && res.token) {
+      const userData = JSON.stringify({
+        userName: res.userName,
+        expiration: res.expiration,
+        createdAt: res.createdAt,
+      });
+
+      localStorage.setItem("user", userData);
+      Cookies.set("token", res.token, { expires: 7 });
+      Cookies.set("id", res.userId, { expires: 7 });
     }
 
     return res;
@@ -48,8 +65,10 @@ const loginUser = async (data: UserLogin) => {
 };
 
 const logout = () => {
-  localStorage.removeItem("user");
+  Cookies.remove("token");
+  Cookies.remove("id");
   localStorage.removeItem("reload");
+  localStorage.removeItem("user");
 };
 
 const authService = {

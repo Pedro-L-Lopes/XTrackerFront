@@ -1,9 +1,14 @@
+import Cookies from "js-cookie";
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import habitService from "../services/habitServiceRedux";
 
 // Interfaces
 import { HabitsInfo } from "../interfaces/habits/IHabitsInfo";
 import { Summary } from "../interfaces/habits/ISummary";
+
+const userId = Cookies.get("id");
+const token = Cookies.get("token");
 
 interface User {
   userId: string;
@@ -61,14 +66,9 @@ export const postHabit = createAsyncThunk(
 export const getSummary = createAsyncThunk(
   "habits/getSummary",
   async (year: string, thunkAPI) => {
-    const token = (thunkAPI.getState() as RootStateWithAuth).auth.user.token;
-
-    const userString = localStorage.getItem("user");
-
-    if (userString) {
+    if (userId && token) {
       try {
-        const user = JSON.parse(userString);
-        const habits = await habitService.getSummary(user.userId, year, token);
+        const habits = await habitService.getSummary(userId, year, token);
         return habits;
       } catch (error) {
         return thunkAPI.rejectWithValue(error);
@@ -82,15 +82,13 @@ export const getHabitDay = createAsyncThunk(
   async (date: string, thunkAPI) => {
     const data = (thunkAPI.getState() as RootStateWithAuth).auth.user;
 
-    try {
-      const habits = await habitService.getHabitDay(
-        date,
-        data.userId,
-        data.token
-      );
-      return habits;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+    if (userId) {
+      try {
+        const habits = await habitService.getHabitDay(date, userId, data.token);
+        return habits;
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error);
+      }
     }
   }
 );

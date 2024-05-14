@@ -1,11 +1,20 @@
+// Hooks
 import { useState, useEffect, FormEvent } from "react";
 import { Link } from "react-router-dom";
+
+// Redux
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { registerUser, reset } from "../../slices/authSlice";
-import Message from "../../components/message/Message";
+
+// Components
+import Message from "../../components/utils/message/Message";
+
+// Icons
 import { RiUser3Line, RiLockPasswordLine } from "react-icons/ri";
 import { IoCheckmark } from "react-icons/io5";
+
+// Images
 import logo from "../../assets/Logo.svg";
 
 const Register = () => {

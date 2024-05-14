@@ -6,7 +6,7 @@ import { useState } from "react";
 
 // Components
 import * as Popover from "@radix-ui/react-popover";
-import ProgressBar from "../progress/ProgressBar";
+import ProgressBar from "../utils/progress/ProgressBar";
 import HabitList from "./HabitList";
 
 // Libs

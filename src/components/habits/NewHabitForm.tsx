@@ -3,7 +3,7 @@ import { FormEvent, useState } from "react";
 
 // Components
 import * as Checkbox from "@radix-ui/react-checkbox";
-import Message from "../message/Message";
+import Message from "../utils/message/Message";
 
 // Icons
 import { FaCheck } from "react-icons/fa6";

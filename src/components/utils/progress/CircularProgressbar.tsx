@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 // Interfaces
-import { IHMetricsPorgress } from "../../interfaces/habits/IHMetrics";
+import { IHMetricsPorgress } from "../../../interfaces/habits/IHMetrics";
 
 const CircularProgressbar = ({ completed, available }: IHMetricsPorgress) => {
   const circumference = 2 * (22 / 7) * 120;

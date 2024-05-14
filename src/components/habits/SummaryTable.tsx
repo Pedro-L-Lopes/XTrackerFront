@@ -9,6 +9,7 @@ import lessMore from "../../assets/lessMore.svg";
 
 // Components
 import HabitDay from "./HabitDay";
+import Loading from "../utils/loading/Loading";
 
 // Libs
 import dayjs from "dayjs";
@@ -38,6 +39,9 @@ const SummaryTable = () => {
 
   const dispatch = useAppDispatch();
 
+  const { user } = useSelector((state: any) => state.auth);
+  console.log(user);
+
   const { summary, loading } = useSelector((state: any) => state.habit);
 
   useEffect(() => {
@@ -56,10 +60,8 @@ const SummaryTable = () => {
   }, [summary]);
 
   if (loading) {
-    return <p>Carregando... </p>;
+    return <Loading />;
   }
-
-  console.log(summary);
 
   return (
     <main>

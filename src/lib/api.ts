@@ -1,12 +1,14 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
-const userString = localStorage.getItem("user");
-const user = userString ? JSON.parse(userString) : null;
+// Obtém o token JWT dos cookies
+const token = Cookies.get("token");
+console.log(token);
 
 let headers = {};
-if (user && user.token) {
+if (token) {
   headers = {
-    Authorization: `Bearer ${user.token}`,
+    Authorization: `Bearer ${token}`,
   };
 }
 

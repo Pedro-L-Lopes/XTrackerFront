@@ -14,7 +14,7 @@ import { RiUser3Line, RiLockPasswordLine } from "react-icons/ri";
 import logo from "../../assets/Logo.svg";
 
 // Components
-import Message from "../../components/message/Message";
+import Message from "../../components/utils/message/Message";
 
 const Login = () => {
   const [email, setEmail] = useState("");

@@ -1,9 +1,10 @@
+import Cookies from "js-cookie";
+
 // lib
 import { api } from "../lib/api";
 
 // User
-const userString = localStorage.getItem("user");
-const user = userString ? JSON.parse(userString) : null;
+const userId = Cookies.get("id");
 
 export const postHabit = async (data: {
   title: string;
@@ -12,7 +13,7 @@ export const postHabit = async (data: {
   try {
     const response = await api.post("/habit/", {
       ...data,
-      userId: user.userId,
+      userId: userId,
     });
 
     return response.data;
@@ -25,7 +26,7 @@ export const getSummary = async (year: string) => {
   try {
     const response = await api.get("/habit/summary", {
       params: {
-        userId: user.userId,
+        userId: userId,
         year: year,
       },
     });
@@ -41,7 +42,7 @@ export const getHabitsForDay = async (date: Date) => {
     const response = await api.get("/habit/day", {
       params: {
         date: date.toISOString(),
-        userId: user.userId,
+        userId: userId,
       },
     });
 
@@ -77,7 +78,7 @@ export const editHabit = async (habitId: string, newTitle: string) => {
 
 export const getAllHabits = async () => {
   try {
-    const response = await api.get(`/habit/allhabits?userId=${user.userId}`);
+    const response = await api.get(`/habit/allhabits?userId=${userId}`);
     return response.data;
   } catch (error) {
     console.log("Error", error);
