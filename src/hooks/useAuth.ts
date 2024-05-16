@@ -11,9 +11,13 @@ export const useAuth = () => {
   useEffect(() => {
     const jwtToken = Cookies.get("token");
 
-    if (jwtToken) {
+    if (jwtToken && user.expiration && new Date(user.expiration) > new Date()) {
       setAuth(true);
     } else {
+      Cookies.remove("token");
+      Cookies.remove("id");
+      localStorage.removeItem("user");
+      localStorage.removeItem("reload");
       setAuth(false);
     }
 

@@ -18,12 +18,21 @@ import { PiCursorClick } from "react-icons/pi";
 import dayjs from "dayjs";
 import { availableWeekDaysAbv } from "../../utils/week-days";
 
+// Redux
+import { useSelector } from "react-redux";
+
 type Props = {
   id: string;
 };
 
 const HabitMetrics = ({ id }: Props) => {
+  const { user } = useSelector((state: any) => state.auth);
+
   const [details, setDetails] = useState<IHMetrics | null>(null);
+  const [startDate, setStartDate] = useState(
+    dayjs(user.createdAt).format("YYYY-MM-DD")
+  );
+  const [endDate, setEndDate] = useState(dayjs().format("YYYY-MM-DD"));
 
   const created = dayjs(details?.habit.createdAt).format("DD/MM/YYYY");
 
@@ -32,7 +41,7 @@ const HabitMetrics = ({ id }: Props) => {
 
     const fetchData = async () => {
       try {
-        const response = await getHabitMetrics(id);
+        const response = await getHabitMetrics(id, startDate!, endDate!);
         setDetails(response.data);
       } catch (error) {
         console.log("Error fetching data:", error);
@@ -40,7 +49,7 @@ const HabitMetrics = ({ id }: Props) => {
     };
 
     fetchData();
-  }, [id]);
+  }, [id, startDate, endDate]);
 
   return (
     <main className="w-full ml-1">
@@ -51,7 +60,6 @@ const HabitMetrics = ({ id }: Props) => {
               Detalhes
             </h1>
           </div>
-
           <section className="flex items-center justify-between">
             <h4 className="text-sm font-semibold flex gap-2 p-2">
               <FaCalendar size={20} />
@@ -71,31 +79,53 @@ const HabitMetrics = ({ id }: Props) => {
               </div>
             )}
           </section>
-
           <h2 className="text-center text-xl font-bold">
             {details?.habit.title}
           </h2>
-
-          <CircularProgressbar
-            completed={details?.completed}
-            available={details?.available}
-          />
-
-          <section className="flex justify-center items-center gap-24">
-            <div className="flex flex-col justify-center items-center">
-              <article className="text-center">
-                <h3>Dias</h3>
-                <h3>Disponíveis</h3>
-              </article>
-              <span className="text-4xl font-bold">{details?.available}</span>
+          <section className="flex justify-center items-center">
+            <div>
+              <CircularProgressbar
+                completed={details?.completed}
+                available={details?.available}
+              />
             </div>
 
-            <div className="flex flex-col justify-center items-center">
-              <article className="text-center">
-                <h3>Dias</h3>
-                <h3>Completados</h3>
-              </article>
-              <span className="text-4xl font-bold">{details?.completed}</span>
+            <section className="flex justify-center items-center gap-10 ml-5">
+              <div className="flex flex-col justify-center items-center">
+                <article className="text-center">
+                  <h3>Dias</h3>
+                  <h3>Disponíveis</h3>
+                </article>
+                <span className="text-4xl font-bold">{details?.available}</span>
+              </div>
+
+              <div className="flex flex-col justify-center items-center">
+                <article className="text-center">
+                  <h3>Dias</h3>
+                  <h3>Completados</h3>
+                </article>
+                <span className="text-4xl font-bold">{details?.completed}</span>
+              </div>
+            </section>
+          </section>
+
+          <section className="font-bold flex items-center justify-center gap-2 mt-2">
+            <div className="w-40 flex justify-between items-center bg-violet-600 p-1 rounded-sm">
+              <input
+                type="date"
+                className="text-center bg-transparent"
+                onChange={(e) => setStartDate(e.target.value)}
+                value={startDate}
+              />
+            </div>
+            a
+            <div className="w-40 flex justify-between items-center bg-violet-600 p-1 rounded-sm">
+              <input
+                type="date"
+                className="text-center bg-transparent"
+                onChange={(e) => setEndDate(e.target.value)}
+                value={endDate}
+              />
             </div>
           </section>
         </>

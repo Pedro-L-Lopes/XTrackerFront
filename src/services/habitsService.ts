@@ -86,9 +86,15 @@ export const getAllHabits = async () => {
   }
 };
 
-export const getHabitMetrics = async (id: string) => {
+export const getHabitMetrics = async (
+  id: string,
+  startDate: string,
+  endDate: string
+) => {
   try {
-    const response = await api.get(`/habit/${id}/habitmetrics`);
+    const response = await api.get(
+      `/habit/${id}/habitmetrics?startDate=${startDate}&endDate=${endDate}`
+    );
     return response;
   } catch (error) {
     console.log("Error", error);

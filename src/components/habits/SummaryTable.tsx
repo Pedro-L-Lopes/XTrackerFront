@@ -39,9 +39,6 @@ const SummaryTable = () => {
 
   const dispatch = useAppDispatch();
 
-  const { user } = useSelector((state: any) => state.auth);
-  console.log(user);
-
   const { summary, loading } = useSelector((state: any) => state.habit);
 
   useEffect(() => {

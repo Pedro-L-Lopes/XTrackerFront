@@ -1,9 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-// Obtém o token JWT dos cookies
 const token = Cookies.get("token");
-console.log(token);
 
 let headers = {};
 if (token) {

@@ -18,6 +18,7 @@ import { useAuth } from "./hooks/useAuth";
 
 // Router
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
 
 function App() {
   const { auth, loading } = useAuth();
@@ -32,16 +33,20 @@ function App() {
         {auth && <Sidebar />}
         <Routes>
           <Route
+            path="/"
+            element={auth ? <Home /> : <Navigate to="/login" />}
+          />
+          <Route
             path="/habits"
             element={auth ? <Habits /> : <Navigate to="/login" />}
           />
           <Route
             path="/register"
-            element={!auth ? <Register /> : <Navigate to="/habits" />}
+            element={!auth ? <Register /> : <Navigate to="/" />}
           />
           <Route
             path="/login"
-            element={!auth ? <Login /> : <Navigate to="/habits" />}
+            element={!auth ? <Login /> : <Navigate to="/" />}
           />
         </Routes>
         <Footer />
