@@ -12,7 +12,7 @@ const HabitsAndMetrics = () => {
   };
 
   return (
-    <main className="bg-zinc-900 p-2 flex rounded-md mt-14">
+    <main className="bg-zinc-900 p-2 flex rounded-md mt-14 min-h-[500px]">
       <AllHabits onChangeId={onChangeId} />
       <HabitMetrics id={id} />
     </main>

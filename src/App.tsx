@@ -32,12 +32,12 @@ function App() {
       <BrowserRouter>
         {auth && <Sidebar />}
         <Routes>
-          <Route
+          {/* <Route
             path="/"
             element={auth ? <Home /> : <Navigate to="/login" />}
-          />
+          /> */}
           <Route
-            path="/habits"
+            path="/"
             element={auth ? <Habits /> : <Navigate to="/login" />}
           />
           <Route
