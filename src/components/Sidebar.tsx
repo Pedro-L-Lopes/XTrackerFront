@@ -3,7 +3,6 @@ import { useState, createElement } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Icons
-import { Link } from "react-router-dom";
 import { BiTask } from "react-icons/bi";
 import { CiLogout } from "react-icons/ci";
 import { HiMenuAlt3 } from "react-icons/hi";
@@ -28,13 +27,18 @@ const Home = () => {
   };
 
   const menus = [
-    { name: "Meu perfil", link: "/", icon: AiOutlineUser },
+    { name: "Meu perfil", link: "/user", icon: AiOutlineUser },
     { name: "Dashboard", link: "/", icon: MdOutlineDashboard, margin: true },
     { name: "Hábitos", link: "/habits", icon: BsClipboardData },
     { name: "Tarefas", link: "/", icon: BiTask },
     { name: "Treinos", link: "/", icon: LiaDumbbellSolid },
     { name: "Finanças", link: "/", icon: BsGraphUpArrow },
-    { name: "Configurações", link: "/", icon: RiSettings4Line, margin: true },
+    {
+      name: "Configurações",
+      link: "/config",
+      icon: RiSettings4Line,
+      margin: true,
+    },
     { name: "Sair", link: handleLogout, icon: CiLogout, logout: true },
   ];
 
@@ -43,9 +47,9 @@ const Home = () => {
   return (
     <section className="flex gap-6 fixed">
       <div
-        className={`bg-zinc-900 min-h-screen ${
-          open ? "w-52" : "w-16"
-        } duration-500 text-gray-100 px-4`}
+        className={`min-h-screen ${
+          open ? "w-44 bg-zinc-900" : "w-16"
+        } duration-500 text-gray-100 px-4 flex flex-col `}
       >
         <div className="py-3 flex justify-end">
           <HiMenuAlt3
@@ -54,11 +58,15 @@ const Home = () => {
             onClick={() => setOpen(!open)}
           />
         </div>
-        <div className="mt-4 flex flex-col gap-4 relative">
+        <div
+          className={`mt-4 flex flex-col gap-4 relative ${
+            !open ? "hidden" : ""
+          }`}
+        >
           {menus?.map((menu, i) => (
             <div
               key={i}
-              className={`group flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded-md transition-all duration-300 cursor-pointer  ${
+              className={`group flex items-center text-sm gap-3.5 font-medium p-2 hover:opacity-70 rounded-md transition-all duration-300 cursor-pointer animate-fadeIn ${
                 menu?.margin && "mt-5"
               }`}
               onClick={() => {

@@ -46,7 +46,7 @@ const Login = () => {
           <img src={logo} alt="Logo XTracker" className="w-[100px]" />
         </div>
         <div>
-          <p className="text-4xl font-bold max-w-[500px]">
+          <p className="text-3xl max-w-[500px]">
             Bem vindo ao XTracker <br /> Acompanhe seu progresso Tome o controle
             e evolua cada vez mais.
           </p>
@@ -69,7 +69,7 @@ const Login = () => {
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
-            className="p-2 w-full flex bg-transparent placeholder:text-white outline-none "
+            className="p-2 w-full flex bg-transparent placeholder:text-white outline-none"
             required
           />
         </label>

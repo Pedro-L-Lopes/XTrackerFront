@@ -26,11 +26,7 @@ interface Habit {
 
 // Components
 import * as Popover from "@radix-ui/react-popover";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-} from "@radix-ui/react-tooltip";
+import * as Tolltip from "@radix-ui/react-tooltip";
 
 type Props = {
   onChangeId: (id: string) => void;
@@ -106,16 +102,16 @@ const AllHabits = ({ onChangeId }: Props) => {
             </option>
           ))}
         </select>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipContent sideOffset={5} side="top" align="center">
+        <Tolltip.TooltipProvider>
+          <Tolltip.Tooltip>
+            <Tolltip.TooltipContent sideOffset={5} side="top" align="center">
               Clique para atualizar
-            </TooltipContent>
+            </Tolltip.TooltipContent>
             <button onClick={handleRefreshClick}>
               <TbRefresh size={24} />
             </button>
-          </Tooltip>
-        </TooltipProvider>
+          </Tolltip.Tooltip>
+        </Tolltip.TooltipProvider>
       </div>
 
       {filteredHabits.length > 0 ? (
@@ -129,7 +125,7 @@ const AllHabits = ({ onChangeId }: Props) => {
             key={habit.id}
           >
             <div
-              className={`flex flex-col p-2 justify-center cursor-pointer rounded-sm mr-2 w-52`}
+              className={`flex flex-col p-2 justify-center cursor-pointer rounded-sm mr-2 w-52 animate-fadeIn`}
               onClick={() => handleHabitClick(habit.id)}
             >
               {editingHabitId === habit.id ? (
@@ -205,7 +201,7 @@ const AllHabits = ({ onChangeId }: Props) => {
           </section>
         ))
       ) : (
-        <p>Carregando</p>
+        <p className="text-center">Seus hábitos aparecerão aqui</p>
       )}
     </main>
   );

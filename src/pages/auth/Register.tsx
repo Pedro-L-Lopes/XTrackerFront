@@ -56,7 +56,7 @@ const Register = () => {
           <img src={logo} alt="Logo XTracker" className="w-[100px]" />
         </div>
         <div>
-          <p className="text-4xl font-bold max-w-[500px]">
+          <p className="text-3xl max-w-[500px]">
             Bem vindo ao XTracker <br /> Acompanhe seu progresso Tome o controle
             e evolua cada vez mais.
           </p>
