@@ -26,7 +26,7 @@ interface Habit {
 
 // Components
 import * as Popover from "@radix-ui/react-popover";
-import * as Tolltip from "@radix-ui/react-tooltip";
+import * as Tooltip from "@radix-ui/react-tooltip";
 
 type Props = {
   onChangeId: (id: string) => void;
@@ -102,16 +102,26 @@ const AllHabits = ({ onChangeId }: Props) => {
             </option>
           ))}
         </select>
-        <Tolltip.TooltipProvider>
-          <Tolltip.Tooltip>
-            <Tolltip.TooltipContent sideOffset={5} side="top" align="center">
-              Clique para atualizar
-            </Tolltip.TooltipContent>
-            <button onClick={handleRefreshClick}>
-              <TbRefresh size={24} />
-            </button>
-          </Tolltip.Tooltip>
-        </Tolltip.TooltipProvider>
+        <Tooltip.Provider>
+          <Tooltip.Root>
+            <Tooltip.Trigger asChild>
+              <button onClick={handleRefreshClick}>
+                <TbRefresh size={24} />
+              </button>
+            </Tooltip.Trigger>
+            <Tooltip.Portal>
+              <Tooltip.Content
+                sideOffset={5}
+                side="top"
+                align="center"
+                className="bg-violet-500 rounded-sm p-2"
+              >
+                Clique para atualizar a lista de hábitos
+                <Tooltip.Arrow className="fill-violet-500" />
+              </Tooltip.Content>
+            </Tooltip.Portal>
+          </Tooltip.Root>
+        </Tooltip.Provider>
       </div>
 
       {filteredHabits.length > 0 ? (
@@ -187,13 +197,13 @@ const AllHabits = ({ onChangeId }: Props) => {
                           NÃO
                         </Popover.Close>
                       </div>
-                    </div>
 
-                    <Popover.Arrow
-                      height={8}
-                      width={16}
-                      className="fill-zinc-500"
-                    />
+                      <Popover.Arrow
+                        height={8}
+                        width={16}
+                        className="fill-zinc-500"
+                      />
+                    </div>
                   </Popover.Content>
                 </Popover.Portal>
               </Popover.Root>
