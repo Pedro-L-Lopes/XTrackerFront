@@ -6,9 +6,6 @@ const HabitFeedback = () => {
   const [amount, setAmount] = useState<number>(0);
   const [feedback, setFeedback] = useState<string>("");
 
-  const completedPercentage =
-    amount > 0 ? Math.round((completed / amount) * 100) : 0;
-
   useEffect(() => {
     const today = new Date();
 

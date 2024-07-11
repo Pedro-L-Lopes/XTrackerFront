@@ -62,9 +62,9 @@ const SummaryTable = () => {
 
   return (
     <main>
-      <section className="overflow-x-scroll p-1 custom-scrollbar">
+      <section className="">
         <div className="w-full flex">
-          <div className="grid grid-rows-7 grid-flow-row gap-3">
+          <div className="grid grid-rows-7 grid-flow-row gap-3 mb-4">
             {weekDays.map((weekDay, index) => (
               <div
                 key={index}
@@ -74,7 +74,7 @@ const SummaryTable = () => {
               </div>
             ))}
           </div>
-          <div className="grid grid-rows-7 grid-flow-col gap-3">
+          <div className="grid grid-rows-7 grid-flow-col gap-3 overflow-x-scroll p-1 custom-scrollbar">
             {summary &&
               summaryDates.map((date) => {
                 const dayInSummary = summary.find((day: any) => {

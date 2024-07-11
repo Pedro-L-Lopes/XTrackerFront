@@ -6,11 +6,11 @@ import "./lib/dayjs";
 
 // Pages
 import Home from "./pages/Home";
-import Habits from "./pages/Habits";
-import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import Dashboard from "./pages/Dashboard";
+import Habits from "./pages/Habits";
 import User from "./pages/user/User";
-import Config from "./pages/Config";
 
 // Components
 import Footer from "./components/Footer";
@@ -34,17 +34,24 @@ function App() {
       <BrowserRouter>
         {auth && <Sidebar />}
         <Routes>
+          {/* Home */}
+          <Route
+            path="/"
+            element={!auth ? <Home /> : <Navigate to="/dashboard" />}
+          />
+          {/* Auth */}
           <Route
             path="/register"
-            element={!auth ? <Register /> : <Navigate to="/" />}
+            element={!auth ? <Register /> : <Navigate to="/dashboard" />}
           />
           <Route
             path="/login"
-            element={!auth ? <Login /> : <Navigate to="/" />}
+            element={!auth ? <Login /> : <Navigate to="/dashboard" />}
           />
+          {/* Pages auth */}
           <Route
-            path="/"
-            element={auth ? <Home /> : <Navigate to="/login" />}
+            path="/dashboard"
+            element={auth ? <Dashboard /> : <Navigate to="/login" />}
           />
           <Route
             path="/habits"
@@ -54,10 +61,10 @@ function App() {
             path="/user"
             element={auth ? <User /> : <Navigate to="/login" />}
           />
-          <Route
+          {/* <Route
             path="/config"
             element={auth ? <Config /> : <Navigate to="/login" />}
-          />
+          /> */}
         </Routes>
         <Footer />
       </BrowserRouter>
