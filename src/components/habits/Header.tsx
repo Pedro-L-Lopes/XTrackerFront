@@ -1,19 +1,26 @@
-// Images
+import { useEffect, useState } from "react";
 import logo from "../../assets/Logo.svg";
-
-// Icons
 import { BiPlus, BiX } from "react-icons/bi";
-
-// Components
 import * as Dialog from "@radix-ui/react-dialog";
 import NewHabitForm from "./NewHabitForm";
+import HabitFeedback from "./HabitFeedback";
 
 const Header = () => {
+  const [showFeedback, setShowFeedback] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowFeedback((prevShowFeedback) => !prevShowFeedback);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [showFeedback]);
+
   return (
     <div className="w-full max-w-4xl mx-auto flex justify-between items-center mt-10">
       <img src={logo} alt="XTracker logo" />
 
-      <h2 className="opacity-75">Acompanhe seus hábitos</h2>
+      <HabitFeedback />
 
       <Dialog.Root>
         <Dialog.Trigger className="border border-violet-500 font-semibold rounded-lg px-6 py-4 flex items-center gap-3 hover:border-violet-300 transition-colors focus:outline-none focus:ring-2 focus:ring-violet-600  focus:ring-offset-background">

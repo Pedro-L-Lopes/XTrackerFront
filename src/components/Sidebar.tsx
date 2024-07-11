@@ -27,18 +27,18 @@ const Home = () => {
   };
 
   const menus = [
-    { name: "Meu perfil", link: "/user", icon: AiOutlineUser },
-    { name: "Dashboard", link: "/", icon: MdOutlineDashboard, margin: true },
-    { name: "Hábitos", link: "/habits", icon: BsClipboardData },
+    { name: "Dashboard", link: "/", icon: MdOutlineDashboard },
+    { name: "Hábitos", link: "/habits", icon: BsClipboardData, margin: true },
     { name: "Tarefas", link: "/", icon: BiTask },
-    { name: "Treinos", link: "/", icon: LiaDumbbellSolid },
-    { name: "Finanças", link: "/", icon: BsGraphUpArrow },
-    {
-      name: "Configurações",
-      link: "/config",
-      icon: RiSettings4Line,
-      margin: true,
-    },
+    { name: "Meu perfil", link: "/user", icon: AiOutlineUser, margin: true },
+    // { name: "Treinos", link: "/", icon: LiaDumbbellSolid },
+    // { name: "Finanças", link: "/", icon: BsGraphUpArrow },
+    // {
+    //   name: "Configurações",
+    //   link: "/config",
+    //   icon: RiSettings4Line,
+    //   margin: true,
+    // },
     { name: "Sair", link: handleLogout, icon: CiLogout, logout: true },
   ];
 
