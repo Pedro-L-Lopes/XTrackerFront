@@ -33,7 +33,7 @@ const UserDetails = () => {
     <main className="flex items-center justify-center gap-10 p-10">
       {user && (
         <>
-          <div className="flex items-center justify-center bg-violet-500 w-40 h-40 rounded-3xl mt-5">
+          <div className="flex items-center justify-center bg-teal-500 w-40 h-40 rounded-3xl mt-5">
             <h1 className="font-bold text-6xl text-white">{firstChar}</h1>
           </div>
           <article className="flex flex-col gap-4">

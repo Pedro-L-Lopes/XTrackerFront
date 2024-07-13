@@ -39,7 +39,7 @@ const CircularProgressbar = ({ completed, available }: IHMetricsPorgress) => {
               strokeDashoffset={
                 circumference - (percentage / 100) * circumference
               }
-              className="text-violet-600"
+              className="text-teal-600"
               style={{ transition: "stroke-dashoffset 0.5s ease-in-out" }}
             />
           </svg>

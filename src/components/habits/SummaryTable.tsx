@@ -103,7 +103,7 @@ const SummaryTable = () => {
       </section>
       <div className="flex items-center justify-between mt-2">
         <select
-          className="appearance-none bg-transparent border border-violet-500 rounded-md py-2 px-4 text-violet-500 leading-tight focus:outline-none focus:border-violet-700 cursor-pointer font-bold"
+          className="appearance-none bg-transparent border border-teal-500 rounded-md py-2 px-4 text-teal-500 leading-tight focus:outline-none focus:border-teal-700 cursor-pointer font-bold"
           onChange={(e) => setSelectedYear(e.target.value)}
         >
           {years &&

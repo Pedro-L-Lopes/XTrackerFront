@@ -180,7 +180,7 @@ const Register = () => {
 
         <input
           type="submit"
-          className="p-2 -mt-2 text-violet-500 text-lg font-bold bg-white border rounded-md placeholder:text-white outline-none transition-all hover:text-violet-700 cursor-pointer"
+          className="p-2 -mt-2 text-teal-500 text-lg font-bold bg-white border rounded-md placeholder:text-white outline-none transition-all hover:text-teal-700 cursor-pointer"
           value={loading ? "AGUARDE" : "CADASTRAR"}
         />
         <div className="flex justify-between items-center">

@@ -38,8 +38,8 @@ const Login = () => {
 
   return (
     <main
-      className="h-screen flex justify-center items-center gap-20"
-      style={{ backgroundImage: "linear-gradient(to right, #7c3aed, #472187)" }}
+      className="h-screen flex justify-center items-center gap-20 bg-teal-500"
+      // style={{ backgroundImage: "linear-gradient(to right, #00e6cc, #00b298)" }}
     >
       <section className="flex flex-col items-center">
         <div className="mr-8">
@@ -92,7 +92,7 @@ const Login = () => {
 
         <input
           type="submit"
-          className="p-2 mt-2 text-violet-500 text-lg font-bold bg-white border rounded-md placeholder:text-white outline-none transition-all hover:text-violet-700 cursor-pointer"
+          className="p-2 mt-2 text-teal-500 text-lg font-bold bg-white border rounded-md placeholder:text-white outline-none transition-all hover:text-teal-700 cursor-pointer"
           value={loading ? "AGUARDE" : "ENTRAR"}
         />
 

@@ -92,7 +92,7 @@ const HabitMetrics = ({ id }: Props) => {
       {details ? (
         <>
           <div>
-            <h1 className="text-3xl flex items-center justify-center font-bold h-12 border-b border-violet-600 ">
+            <h1 className="text-3xl flex items-center justify-center font-bold h-12 border-b border-teal-600 ">
               Detalhes
             </h1>
           </div>
@@ -105,7 +105,7 @@ const HabitMetrics = ({ id }: Props) => {
             <section className="flex items-center justify-end">
               {details.habit.weekDays.map((day: any) => (
                 <p
-                  className="text-sm font-semibold bg-violet-600 rounded-sm mr-2 p-1"
+                  className="text-sm font-semibold bg-teal-600 rounded-sm mr-2 p-1"
                   key={day}
                 >
                   {availableWeekDaysAbv[day].toUpperCase()}
@@ -146,10 +146,10 @@ const HabitMetrics = ({ id }: Props) => {
               value={selectedPeriod}
               onValueChange={setSelectedPeriod}
             >
-              <Select.Trigger className="font-bold bg-violet-600 rounded-md p-2 cursor-pointer focus:outline-none">
+              <Select.Trigger className="font-bold bg-teal-600 rounded-md p-2 cursor-pointer focus:outline-none">
                 <Select.Value placeholder="Todo o período" />
               </Select.Trigger>
-              <Select.Content className="font-bold bg-violet-600 rounded-md p-2 cursor-pointer animate-fadeIn">
+              <Select.Content className="font-bold bg-teal-600 rounded-md p-2 cursor-pointer animate-fadeIn">
                 <Select.Viewport>
                   <Select.Group>
                     <Select.Item

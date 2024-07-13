@@ -35,18 +35,18 @@ const HabitDay = ({
   const isToday = dayjs(date).isSame(dayjs(), "day");
 
   const classes = clsx(
-    "w-10 h-10 border-2 rounded-lg border-zinc-800 transition-colors focus:outline-none focus:ring-2 focus:ring-violet-600 focus:ring-offset-background text-sm text-zinc-500 flex items-center justify-center",
+    "w-10 h-10 border-2 rounded-lg border-zinc-800 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-background text-sm text-zinc-500 flex items-center justify-center",
     {
       "bg-zinc-900 border-zinc-800": completedPercentage === 0,
-      "bg-violet-900 border-violet-500":
+      "bg-teal-900 border-teal-500":
         completedPercentage > 0 && completedPercentage < 20,
-      "bg-violet-800 border-violet-500":
+      "bg-teal-800 border-teal-500":
         completedPercentage >= 20 && completedPercentage < 40,
-      "bg-violet-700 border-violet-500":
+      "bg-teal-700 border-teal-500":
         completedPercentage >= 40 && completedPercentage < 60,
-      "bg-violet-600 border-violet-500":
+      "bg-teal-600 border-teal-500":
         completedPercentage >= 60 && completedPercentage < 80,
-      "bg-violet-500 border-violet-400":
+      "bg-teal-500 border-teal-400":
         completedPercentage >= 80 && completedPercentage <= 100,
     }
   );

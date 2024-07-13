@@ -90,7 +90,7 @@ const AllHabits = ({ onChangeId }: Props) => {
 
   return (
     <main className="flex flex-col overflow-y-auto custom-scrollbar max-h-[500px] md:w-[450px]">
-      <div className="flex justify-between items-center mx-10 border-b border-violet-600">
+      <div className="flex justify-between items-center mx-10 border-b border-teal-600">
         <select
           className="bg-zinc-900 text-xl flex items-center text-center font-bold h-12 focus:outline-none"
           onChange={(e) => setSelectedDay(Number(e.target.value))}
@@ -114,10 +114,10 @@ const AllHabits = ({ onChangeId }: Props) => {
                 sideOffset={5}
                 side="top"
                 align="center"
-                className="bg-violet-500 rounded-sm p-2"
+                className="bg-teal-500 rounded-sm p-2"
               >
                 Clique para atualizar a lista de hábitos
-                <Tooltip.Arrow className="fill-violet-500" />
+                <Tooltip.Arrow className="fill-teal-500" />
               </Tooltip.Content>
             </Tooltip.Portal>
           </Tooltip.Root>
@@ -127,10 +127,8 @@ const AllHabits = ({ onChangeId }: Props) => {
       {filteredHabits.length > 0 ? (
         filteredHabits.map((habit) => (
           <section
-            className={`flex items-center mt-2 hover:bg-violet-600 rounded-sm mr-1 ${
-              selectedHabitId === habit.id
-                ? "bg-violet-600"
-                : "hover:bg-violet-600"
+            className={`flex items-center mt-2 hover:bg-teal-600 rounded-sm mr-1 ${
+              selectedHabitId === habit.id ? "bg-teal-600" : "hover:bg-teal-600"
             }`}
             key={habit.id}
           >
@@ -153,14 +151,14 @@ const AllHabits = ({ onChangeId }: Props) => {
               {editingHabitId === habit.id ? (
                 <button
                   onClick={() => handleEditTitle(habit.id)}
-                  className="hover:text-violet-100 cursor-pointer hover:opacity-80"
+                  className="hover:text-teal-100 cursor-pointer hover:opacity-80"
                 >
                   <IoCheckmark size={30} />
                 </button>
               ) : (
                 <CiEdit
                   size={30}
-                  className="hover:text-violet-100 cursor-pointer"
+                  className="hover:text-teal-100 cursor-pointer"
                   onClick={() => {
                     setEditingHabitId(habit.id);
                     setEditingTitleText(habit.title);
@@ -178,7 +176,7 @@ const AllHabits = ({ onChangeId }: Props) => {
                 </Popover.Trigger>
 
                 <Popover.Portal>
-                  <Popover.Content className="min-w-[320px] max-h-[330px] p-6 rounded-md bg-zinc-900 border border-violet-600 flex flex-col overflow-y-auto custom-scrollbar">
+                  <Popover.Content className="min-w-[320px] max-h-[330px] p-6 rounded-md bg-zinc-900 border border-teal-600 flex flex-col overflow-y-auto custom-scrollbar">
                     <div className="flex flex-col justify-between items-center">
                       <h2 className="font-bold">
                         Tem certeza que deseja excluir esse hábito?
@@ -193,7 +191,7 @@ const AllHabits = ({ onChangeId }: Props) => {
                         >
                           SIM
                         </button>
-                        <Popover.Close className="p-1 bg-violet-500 rounded-md font-bold mt-2 hover:bg-violet-400">
+                        <Popover.Close className="p-1 bg-teal-500 rounded-md font-bold mt-2 hover:bg-teal-400">
                           NÃO
                         </Popover.Close>
                       </div>
