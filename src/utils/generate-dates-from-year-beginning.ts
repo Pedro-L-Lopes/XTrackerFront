@@ -1,30 +1,30 @@
 import dayjs from "dayjs";
 
-// FIX: Last day of the year not loading - Fix in the future
+// Função para gerar datas a partir do início do ano
 export function generateDatesFromYearBeginning(year: string) {
   const currentYear = dayjs().year();
   const specifiedYear = parseInt(year);
 
   const firstDayOfTheYear = dayjs(`${year}-01-01`);
-  const firstSundayOfTheYear = firstDayOfTheYear.startOf("week");
+  let firstSundayOfTheYear = firstDayOfTheYear.startOf("week");
 
-  // If the first day of the year is not a Sunday, adjust to the previous Sunday
-  if (firstSundayOfTheYear.date() !== 1) {
-    firstSundayOfTheYear.subtract(7, "day");
+  // Se o primeiro dia do ano não for domingo, ajustar para o domingo anterior mais próximo
+  if (firstDayOfTheYear.day() !== 0) {
+    const daysToSubtract = firstDayOfTheYear.day();
+    firstSundayOfTheYear = firstDayOfTheYear.subtract(daysToSubtract, "day");
   }
 
-  const today = dayjs(); // Get the current date
+  const today = dayjs(); // Obter a data atual
 
   const dates = [];
   let compareDate = firstSundayOfTheYear;
 
   while (compareDate.isBefore(today) || compareDate.isSame(today, "day")) {
-    // If it's the current year, i.e., a future year, limit to the current date
-    // If it's a past year, continue until the last day of the specified year
+    // Se é o ano atual ou um ano passado, limitar até a data atual ou até o último dia do ano
     if (specifiedYear === currentYear || specifiedYear < currentYear) {
       const lastDayOfYear = dayjs(`${specifiedYear}-12-31`);
-      if (compareDate.isSame(lastDayOfYear, "day")) {
-        break; // Exit the loop when reaching the last day of the specified year
+      if (compareDate.isAfter(lastDayOfYear)) {
+        break; // Sair do loop ao chegar ao último dia do ano especificado
       }
     }
     dates.push(compareDate.toDate());
