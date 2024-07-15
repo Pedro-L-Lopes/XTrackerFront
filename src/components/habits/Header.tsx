@@ -1,6 +1,10 @@
+// Hooks
 import { useEffect, useState } from "react";
-import logo from "../../assets/Logo.svg";
+// Icons
 import { BiPlus, BiX } from "react-icons/bi";
+// Logo
+import logo from "../../assets/Logo.svg";
+// Components
 import * as Dialog from "@radix-ui/react-dialog";
 import NewHabitForm from "./NewHabitForm";
 import HabitFeedback from "./HabitFeedback";

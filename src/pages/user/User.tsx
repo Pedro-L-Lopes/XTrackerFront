@@ -3,7 +3,7 @@ import UserDetails from "../../components/user/userDetails";
 
 const User = () => {
   return (
-    <main>
+    <main className="flex justify-center items-center">
       <UserDetails />
     </main>
   );

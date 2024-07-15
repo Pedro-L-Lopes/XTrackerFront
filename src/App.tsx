@@ -61,10 +61,6 @@ function App() {
             path="/user"
             element={auth ? <User /> : <Navigate to="/login" />}
           />
-          {/* <Route
-            path="/config"
-            element={auth ? <Config /> : <Navigate to="/login" />}
-          /> */}
         </Routes>
         <Footer />
       </BrowserRouter>
