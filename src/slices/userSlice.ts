@@ -2,9 +2,8 @@ import Cookies from "js-cookie";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import userService from "../services/userService";
 
-// Tipagem do estado inicial e do usuário
 type User = {
-  id: string;
+  userId: string;
   userName: string;
   email?: string;
   createdAt: string;
@@ -17,11 +16,19 @@ type UserState = {
   success: boolean;
 };
 
-// Pegando userId e token dos Cookies
+interface UpdateUser {
+  errorMessage?: any;
+  userId: string;
+  userName?: string;
+  email?: string;
+  currentPassword?: string;
+  newPassword?: string;
+  confirmNewPassword?: string;
+}
+
 const userId = Cookies.get("id");
 const token = Cookies.get("token");
 
-// Estado inicial
 const initialState: UserState = {
   user: null,
   loading: false,
@@ -29,19 +36,34 @@ const initialState: UserState = {
   success: false,
 };
 
-// Thunk para buscar detalhes do usuário
 export const getUserDetails = createAsyncThunk(
   "user/details",
   async (_, thunkAPI) => {
     try {
       const res = await userService.getUserDetails(userId!, token!);
 
-      // Aqui você pode precisar adaptar a estrutura do res para garantir que ele é do tipo User
       if (!res) {
-        throw new Error("No user data returned");
+        throw new Error("Nenhum dado de usuário encontrado!");
       }
 
       return res as unknown as User;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const patchUserDetails = createAsyncThunk(
+  "user/update",
+  async (data: UpdateUser, thunkAPI) => {
+    try {
+      const res = await userService.patchUserDetails(data, token!);
+
+      if (res.status == "Error") {
+        return thunkAPI.rejectWithValue(res.message);
+      }
+
+      return res as User;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -67,16 +89,28 @@ export const userSlice = createSlice({
       })
       .addCase(getUserDetails.fulfilled, (state, action) => {
         state.loading = false;
-        state.success = true;
+        state.success = false;
         state.user = action.payload;
       })
       .addCase(getUserDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(patchUserDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(patchUserDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.user = action.payload;
+      })
+      .addCase(patchUserDetails.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });
   },
 });
 
-// Exportando as ações e o reducer
 export const { reset } = userSlice.actions;
 export default userSlice.reducer;

@@ -11,6 +11,7 @@ import Register from "./pages/auth/Register";
 import Dashboard from "./pages/Dashboard";
 import Habits from "./pages/Habits";
 import User from "./pages/user/User";
+import EditUser from "./pages/user/EditUser";
 
 // Components
 import Footer from "./components/Footer";
@@ -60,6 +61,10 @@ function App() {
           <Route
             path="/user"
             element={auth ? <User /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/user/edit"
+            element={auth ? <EditUser /> : <Navigate to="/login" />}
           />
         </Routes>
         <Footer />

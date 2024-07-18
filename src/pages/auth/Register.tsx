@@ -47,10 +47,7 @@ const Register = () => {
   };
 
   return (
-    <main
-      className="h-screen flex justify-center items-center gap-20"
-      style={{ backgroundImage: "linear-gradient(to right, #7c3aed, #472187)" }}
-    >
+    <main className="h-screen flex justify-center items-center gap-20 bg-teal-500">
       <section className="flex flex-col items-center">
         <div className="mr-8">
           <img src={logo} alt="Logo XTracker" className="w-[100px]" />
@@ -135,7 +132,7 @@ const Register = () => {
           <div className="flex justify-between">
             <div
               className={`flex items-center ${
-                /[0-9]/.test(password) ? "text-white" : "text-red-500"
+                /[0-9]/.test(password) ? "text-white" : "text-black"
               }`}
             >
               <IoCheckmark />
@@ -143,7 +140,7 @@ const Register = () => {
             </div>
             <div
               className={`flex items-center ${
-                /[A-Z]/.test(password) ? "text-white" : "text-red-500"
+                /[A-Z]/.test(password) ? "text-white" : "text-black"
               }`}
             >
               <IoCheckmark />
@@ -153,7 +150,7 @@ const Register = () => {
           <div className="flex justify-between">
             <div
               className={`flex items-center ${
-                /[a-z]/.test(password) ? "text-white" : "text-red-500"
+                /[a-z]/.test(password) ? "text-white" : "text-black"
               }`}
             >
               <IoCheckmark />
@@ -161,7 +158,7 @@ const Register = () => {
             </div>
             <div
               className={`flex items-center ${
-                /[@$!%*?&]/.test(password) ? "text-white" : "text-red-500"
+                /[@$!%*?&]/.test(password) ? "text-white" : "text-black"
               }`}
             >
               <IoCheckmark />
@@ -170,7 +167,7 @@ const Register = () => {
           </div>
           <div
             className={`flex text-xs ${
-              isPasswordValid(password) ? "text-white" : "text-red-500"
+              isPasswordValid(password) ? "text-white" : "text-black"
             }`}
           >
             <IoCheckmark />

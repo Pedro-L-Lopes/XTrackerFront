@@ -1,20 +1,20 @@
+// Hooks
 import { FormEvent, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+// Icons
 import { TiArrowUnsorted } from "react-icons/ti";
+import { IoArrowBackCircleOutline } from "react-icons/io5";
+// Redux
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { patchUserDetails } from "../../slices/userSlice";
+import {
+  patchUserDetails,
+  getUserDetails,
+  reset,
+} from "../../slices/userSlice";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
-interface User {
-  userId: string;
-  createdAt: string;
-  email: string;
-  id: string;
-  userName: string;
-}
 
 interface UpdateUser {
-  errorMessage?: any;
+  errorMessage?: string;
   userId: string;
   userName?: string;
   email?: string;
@@ -23,25 +23,32 @@ interface UpdateUser {
   confirmNewPassword?: string;
 }
 
-const EditUserForm = ({
-  user,
-  setShowDialog,
-}: {
-  user: User;
-  setShowDialog: (open: boolean) => void;
-}) => {
+const EditUserDetails = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { error, loading, success } = useSelector((state: any) => state.user);
+  const { user, error, loading, success } = useSelector(
+    (state: any) => state.user
+  );
 
-  const [userName, setUserName] = useState(user.userName);
-  const [email, setEmail] = useState(user.email);
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [changePassword, setChangePassword] = useState(false);
-  const [formError, setFormError] = useState("");
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    dispatch(getUserDetails());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (user) {
+      setUserName(user.userName);
+      setEmail(user.email);
+    }
+  }, [user]);
 
   const handleUpdate = (e: FormEvent) => {
     e.preventDefault();
@@ -50,11 +57,11 @@ const EditUserForm = ({
       changePassword &&
       (!currentPassword || !newPassword || !confirmNewPassword)
     ) {
-      setFormError("Por favor, preencha todos os campos de senha.");
+      setMessage("Por favor, preencha todos os campos de senha.");
       return;
     }
 
-    setFormError("");
+    setMessage("");
 
     const updatedFields: Partial<UpdateUser> = {};
 
@@ -77,7 +84,7 @@ const EditUserForm = ({
     }
 
     if (Object.keys(updatedFields).length === 0) {
-      setFormError("Nenhuma alteração foi feita.");
+      setMessage("Nenhuma alteração foi feita.");
       return;
     }
 
@@ -91,17 +98,39 @@ const EditUserForm = ({
 
   useEffect(() => {
     if (error) {
-      setFormError(error);
+      setMessage(error);
     }
   }, [error]);
 
-  if (success) {
-    navigate("/user");
+  useEffect(() => {
+    setTimeout(async () => {
+      if (success) {
+        navigate("/user");
+        dispatch(reset());
+      }
+    }, 2000);
+  }, [success, navigate]);
+
+  if (loading) {
+    return (
+      <p className="text-center text-xl font-semibold text-gray-600">
+        Carregando...
+      </p>
+    );
   }
 
   return (
-    <main>
-      <form onSubmit={handleUpdate} className="flex flex-col">
+    <main className="min-h-screen w-full flex flex-col items-center justify-center mt-5">
+      <Link
+        to="/user"
+        className="flex items-center bg-teal-500 hover:bg-teal-400 p-1 rounded-sm transition-all"
+      >
+        <IoArrowBackCircleOutline /> Voltar para o perfil
+      </Link>
+      <form
+        onSubmit={handleUpdate}
+        className="flex flex-col justify-center w-1/3"
+      >
         <label className="text-sm mt-5">Nome de usuário</label>
         <input
           type="text"
@@ -111,7 +140,7 @@ const EditUserForm = ({
         />
         <label className="text-sm mt-5">Email</label>
         <input
-          type="text"
+          type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="bg-transparent p-2 border border-teal-500 rounded-md"
@@ -151,18 +180,22 @@ const EditUserForm = ({
           </section>
         )}
 
-        {formError && <p className="text-red-500">{formError}</p>}
-        {success && <p className="text-green-500">Atualização bem-sucedida!</p>}
-
         <button
           type="submit"
           className="bg-teal-500 hover:bg-teal-400 transition-all rounded-md p-2 font-bold mt-7"
         >
-          Confirmar alterações
+          Salvar alterações
         </button>
+
+        {message && <p className="text-red-500 text-center mt-2">{message}</p>}
+        {success && (
+          <p className="text-green-500 text-center mt-2">
+            Atualização bem-sucedida!
+          </p>
+        )}
       </form>
     </main>
   );
 };
 
-export default EditUserForm;
+export default EditUserDetails;

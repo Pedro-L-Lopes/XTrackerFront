@@ -133,7 +133,6 @@ export const habitSlice = createSlice({
         state.loading = false;
         state.error = false;
         state.habitsInfo = action.payload;
-        console.log(action.payload);
       })
       .addCase(getHabitDay.rejected, (state, action) => {
         state.loading = false;

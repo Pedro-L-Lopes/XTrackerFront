@@ -34,13 +34,8 @@ const Login = () => {
     dispatch(reset());
   }, [dispatch]);
 
-  console.log(error);
-
   return (
-    <main
-      className="h-screen flex justify-center items-center gap-20 bg-teal-500"
-      // style={{ backgroundImage: "linear-gradient(to right, #00e6cc, #00b298)" }}
-    >
+    <main className="h-screen flex justify-center items-center gap-20 bg-teal-500">
       <section className="flex flex-col items-center">
         <div className="mr-8">
           <img src={logo} alt="Logo XTracker" className="w-[100px]" />

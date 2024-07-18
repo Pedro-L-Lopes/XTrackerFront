@@ -59,7 +59,7 @@ const HabitDay = ({
   return (
     <Popover.Root>
       <Popover.Trigger className={classes}>
-        {isToday ? <BsAppIndicator /> : ""}
+        {isToday ? <BsAppIndicator className="fill-white" /> : ""}
       </Popover.Trigger>
 
       <Popover.Portal>
