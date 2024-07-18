@@ -32,6 +32,7 @@ const Register = () => {
       userName,
       email,
       password,
+      confirmPassword,
     };
     dispatch(registerUser(user));
   };

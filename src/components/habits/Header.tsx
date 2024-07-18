@@ -21,7 +21,7 @@ const Header = () => {
   }, [showFeedback]);
 
   return (
-    <div className="w-full max-w-4xl mx-auto flex justify-between items-center mt-10">
+    <header className="w-full max-w-4xl mx-auto flex justify-between items-center mt-10">
       <img src={logo} alt="XTracker logo" />
 
       <HabitFeedback />
@@ -48,7 +48,7 @@ const Header = () => {
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
-    </div>
+    </header>
   );
 };
 

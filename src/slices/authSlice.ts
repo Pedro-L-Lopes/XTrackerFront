@@ -8,6 +8,7 @@ type User = {
   userName: string;
   email?: string;
   password: string;
+  confirmPassword: string;
 };
 
 type UserLogin = {
@@ -85,7 +86,12 @@ export const authSlice = createSlice({
         state.loading = false;
         state.error = true;
         state.error = action.payload;
-        state.user = { userName: "", email: "", password: "" };
+        state.user = {
+          userName: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        };
       })
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
@@ -100,10 +106,10 @@ export const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        state.user = { userName: "", password: "" };
+        state.user = { userName: "", password: "", confirmPassword: "" };
       })
       .addCase(logout.fulfilled, (state) => {
-        state.user = { userName: "", password: "" };
+        state.user = { userName: "", password: "", confirmPassword: "" };
         state.loading = false;
         state.success = true;
         state.error = null;
