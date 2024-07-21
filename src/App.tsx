@@ -10,6 +10,7 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Dashboard from "./pages/Dashboard";
 import Habits from "./pages/Habits";
+import ToDo from "./pages/ToDo";
 import User from "./pages/user/User";
 import EditUser from "./pages/user/EditUser";
 
@@ -57,6 +58,10 @@ function App() {
           <Route
             path="/habits"
             element={auth ? <Habits /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/task"
+            element={auth ? <ToDo /> : <Navigate to="/login" />}
           />
           <Route
             path="/user"

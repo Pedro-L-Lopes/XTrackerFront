@@ -35,7 +35,7 @@ const HabitDay = ({
   const isToday = dayjs(date).isSame(dayjs(), "day");
 
   const classes = clsx(
-    "w-10 h-10 border-2 rounded-lg border-zinc-800 transition-colors focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-background text-sm text-zinc-500 flex items-center justify-center",
+    "w-10 h-10 border-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-background text-sm text-zinc-500 flex items-center justify-center",
     {
       "bg-zinc-900 border-zinc-800": completedPercentage === 0,
       "bg-teal-900 border-teal-500":

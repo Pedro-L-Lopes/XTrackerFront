@@ -29,7 +29,7 @@ const Home = () => {
   const menus = [
     { name: "Dashboard", link: "/", icon: MdOutlineDashboard },
     { name: "Hábitos", link: "/habits", icon: BsClipboardData, margin: true },
-    { name: "Tarefas", link: "/", icon: BiTask },
+    { name: "Tarefas", link: "/task", icon: BiTask },
     { name: "Meu perfil", link: "/user", icon: AiOutlineUser, margin: true },
     // { name: "Treinos", link: "/", icon: LiaDumbbellSolid },
     // { name: "Finanças", link: "/", icon: BsGraphUpArrow },
