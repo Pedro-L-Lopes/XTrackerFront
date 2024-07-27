@@ -45,7 +45,7 @@ const Home = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <section className="flex gap-6 fixed">
+    <section className="flex gap-6 fixed z-10">
       <div
         className={`min-h-screen ${
           open ? "w-44 bg-zinc-900" : "w-16"

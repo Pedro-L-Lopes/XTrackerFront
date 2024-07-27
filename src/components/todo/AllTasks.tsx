@@ -18,33 +18,19 @@ interface DayTasksProps {
   onImportantTask: (taskId: string) => void;
 }
 
-const DayTasks = ({
+const AllTasks = ({
   tasks,
   onCompletedTask,
   onImportantTask,
 }: DayTasksProps) => {
   const [isCompletedOpen, setIsCompletedOpen] = useState<boolean>(false);
 
-  const todayFormat = dayjs().format("YYYY-MM-DD");
+  const incompleteTasks = tasks.filter((task) => !task.isCompleted).reverse();
 
-  const incompleteTasks = tasks
-    .filter(
-      (task) =>
-        !task.isCompleted &&
-        dayjs(task.createdAt).format("YYYY-MM-DD") === todayFormat
-    )
-    .reverse();
-
-  const completedTasks = tasks
-    .filter(
-      (task) =>
-        task.isCompleted &&
-        dayjs(task.createdAt).format("YYYY-MM-DD") === todayFormat
-    )
-    .reverse();
+  const completedTasks = tasks.filter((task) => task.isCompleted).reverse();
 
   return (
-    <div className="w-full">
+    <div className="w-full h-screen">
       <div className="mb-4">
         <ul>
           {incompleteTasks.length > 0 ? (
@@ -100,4 +86,4 @@ const DayTasks = ({
   );
 };
 
-export default DayTasks;
+export default AllTasks;

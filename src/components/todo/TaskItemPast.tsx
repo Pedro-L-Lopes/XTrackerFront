@@ -1,8 +1,7 @@
 import {
   IoRadioButtonOff,
   IoCheckmarkCircleOutline,
-  IoStarOutline,
-  IoStar,
+  IoAdd,
 } from "react-icons/io5";
 
 type TaskItemProps = {
@@ -18,7 +17,7 @@ type TaskItemProps = {
   onImportantTask: (taskId: string) => void;
 };
 
-const TaskItem = ({
+const TaskItemPast = ({
   task,
   onCompletedTask,
   onImportantTask,
@@ -34,7 +33,7 @@ const TaskItem = ({
   return (
     <li
       key={task.id}
-      className={`group mt-1 p-2 bg-zinc-900 hover:bg-zinc-800 rounded-md transition-all flex items-center justify-between hover:cursor-pointer animate-fadeIn z-0 ${
+      className={`group mt-1 p-2 border-b border-zinc-900 transition-all flex items-center justify-between hover:cursor-pointer animate-fadeIn ${
         task.isCompleted ? "line-through text-gray-500" : ""
       }`}
     >
@@ -64,22 +63,10 @@ const TaskItem = ({
         </span>
       </div>
       <div className="hover:scale-110 duration-200">
-        {task.isImportant ? (
-          <IoStar
-            size={20}
-            onClick={handleImportantTask}
-            className="text-red-400"
-          />
-        ) : (
-          <IoStarOutline
-            size={20}
-            onClick={handleImportantTask}
-            className="hover:text-red-400"
-          />
-        )}
+        <IoAdd size={20} onClick={handleImportantTask} />
       </div>
     </li>
   );
 };
 
-export default TaskItem;
+export default TaskItemPast;
