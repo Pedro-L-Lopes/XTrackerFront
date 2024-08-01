@@ -16,6 +16,11 @@ type CreateTask = {
   userId?: string;
 };
 
+interface ChangeTaskDateParams {
+  taskId: string;
+  date: string;
+}
+
 type ToDoState = {
   tasks: Task[];
   loading: boolean;
@@ -103,6 +108,41 @@ export const importantTask = createAsyncThunk(
   }
 );
 
+export const changeTaskDate = createAsyncThunk(
+  "todo/changeTaskDate",
+  async (params: ChangeTaskDateParams, thunkAPI) => {
+    const { taskId, date } = params;
+    try {
+      const res = await toDoService.changeTaskDate(taskId, date, token!);
+
+      if (res.status === "Error") {
+        return thunkAPI.rejectWithValue(res.message);
+      }
+
+      return res;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const deleteTask = createAsyncThunk(
+  "todo/deleteTaskask",
+  async (taskId: string, thunkAPI) => {
+    try {
+      const res = await toDoService.deleteTask(taskId, token!);
+
+      if (res.status === "Error") {
+        return thunkAPI.rejectWithValue(res.message);
+      }
+
+      return res;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const toDoSlice = createSlice({
   name: "todo",
   initialState,
@@ -177,6 +217,41 @@ export const toDoSlice = createSlice({
         }
       })
       .addCase(importantTask.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(changeTaskDate.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(changeTaskDate.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.tasks.map((task) => {
+          if (task.id === action.payload.id) {
+            return task.createdAt === action.payload.task.createdAt;
+          }
+          return task;
+        });
+      })
+      .addCase(changeTaskDate.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(deleteTask.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteTask.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.error = null;
+
+        state.tasks = state.tasks.filter((task) => {
+          return task.id !== action.payload.id;
+        });
+      })
+      .addCase(deleteTask.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

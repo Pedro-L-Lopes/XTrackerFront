@@ -3,7 +3,7 @@ import logo from "../assets/Logo.svg";
 
 const Footer = () => {
   return (
-    <footer className="flex items-center justify-center gap-2 mt-5 opacity-30">
+    <footer className="flex items-center justify-center gap-2 mt-5 opacity-30 z-0">
       <div className="flex items-center justify-center cursor-pointer">
         <img src={logo} alt="logo" className="w-7" />
         <p>© 2024 XTracker</p>

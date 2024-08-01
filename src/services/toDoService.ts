@@ -60,11 +60,40 @@ const importantTask = async (taskId: string, token: string) => {
   }
 };
 
+const changeTaskDate = async (taskId: string, date: string, token: string) => {
+  const config = requestConfig("PATCH", null, token);
+
+  try {
+    const res = await fetch(
+      api + `/todo/changedate?taskid=${taskId}&date=${date}`,
+      config
+    ).then((res) => res.json().catch((err) => err));
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteTask = async (taskId: string, token: string) => {
+  const config = requestConfig("DELETE", null, token);
+
+  try {
+    const res = await fetch(api + `/todo?taskid=${taskId}`, config).then(
+      (res) => res.json().catch((err) => err)
+    );
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const toDoService = {
   createTask,
   getAllTasks,
   completedTask,
   importantTask,
+  changeTaskDate,
+  deleteTask,
 };
 
 export default toDoService;

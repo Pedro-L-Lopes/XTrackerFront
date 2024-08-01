@@ -1,6 +1,5 @@
 import dayjs from "dayjs";
 import TaskItemPast from "./TaskItemPast";
-import { useState } from "react";
 
 type Task = {
   id: string;
@@ -15,15 +14,15 @@ interface DayTasksProps {
   tasks: Task[];
   onCompletedTask: (taskId: string) => void;
   onImportantTask: (taskId: string) => void;
+  onEditTask: (task: Task) => void;
 }
 
 const PastTasks = ({
   tasks,
   onCompletedTask,
   onImportantTask,
+  onEditTask,
 }: DayTasksProps) => {
-  const [isCompletedOpen, setIsCompletedOpen] = useState<boolean>(false);
-
   const todayFormat = dayjs().format("YYYY-MM-DD");
 
   const incompleteTasks = tasks
@@ -34,7 +33,6 @@ const PastTasks = ({
     )
     .reverse();
 
-  const completedTasks = tasks.filter((task) => task.isCompleted);
   return (
     <main className="flex flex-col border-l border-zinc-900 p-1 w-72 h-screen">
       <div className="flex items-center justify-between"></div>
@@ -46,6 +44,7 @@ const PastTasks = ({
               task={task}
               onCompletedTask={onCompletedTask}
               onImportantTask={onImportantTask}
+              onEditTask={onEditTask}
             />
           ))
         ) : (

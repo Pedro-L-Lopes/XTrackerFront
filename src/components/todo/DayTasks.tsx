@@ -16,12 +16,14 @@ interface DayTasksProps {
   tasks: Task[];
   onCompletedTask: (taskId: string) => void;
   onImportantTask: (taskId: string) => void;
+  onEditTask: (task: Task) => void;
 }
 
 const DayTasks = ({
   tasks,
   onCompletedTask,
   onImportantTask,
+  onEditTask,
 }: DayTasksProps) => {
   const [isCompletedOpen, setIsCompletedOpen] = useState<boolean>(false);
 
@@ -54,6 +56,7 @@ const DayTasks = ({
                 task={task}
                 onCompletedTask={onCompletedTask}
                 onImportantTask={onImportantTask}
+                onEditTask={onEditTask}
               />
             ))
           ) : (
@@ -89,6 +92,7 @@ const DayTasks = ({
                 task={task}
                 onCompletedTask={onCompletedTask}
                 onImportantTask={onImportantTask}
+                onEditTask={onEditTask}
               />
             ))
           ) : (
@@ -101,3 +105,4 @@ const DayTasks = ({
 };
 
 export default DayTasks;
+  

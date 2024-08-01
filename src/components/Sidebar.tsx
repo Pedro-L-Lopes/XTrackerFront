@@ -27,10 +27,10 @@ const Home = () => {
   };
 
   const menus = [
-    { name: "Dashboard", link: "/", icon: MdOutlineDashboard },
+    // { name: "Dashboard", link: "/", icon: MdOutlineDashboard },
     { name: "Hábitos", link: "/habits", icon: BsClipboardData, margin: true },
-    { name: "Tarefas", link: "/task", icon: BiTask },
-    { name: "Meu perfil", link: "/user", icon: AiOutlineUser, margin: true },
+    // { name: "Tarefas", link: "/task", icon: BiTask },
+    { name: "Meu perfil", link: "/user", icon: AiOutlineUser },
     // { name: "Treinos", link: "/", icon: LiaDumbbellSolid },
     // { name: "Finanças", link: "/", icon: BsGraphUpArrow },
     // {
@@ -39,7 +39,13 @@ const Home = () => {
     //   icon: RiSettings4Line,
     //   margin: true,
     // },
-    { name: "Sair", link: handleLogout, icon: CiLogout, logout: true },
+    {
+      name: "Sair",
+      link: handleLogout,
+      icon: CiLogout,
+      logout: true,
+      margin: true,
+    },
   ];
 
   const [open, setOpen] = useState(false);

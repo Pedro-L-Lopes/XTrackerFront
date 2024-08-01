@@ -10,6 +10,7 @@ import { GoLightBulb } from "react-icons/go";
 import { IoStarOutline, IoSunny, IoHomeOutline } from "react-icons/io5";
 import AllTasks from "../components/todo/AllTasks";
 import ImportantTasks from "../components/todo/ImportantTasks";
+import EditTask from "../components/todo/EditTask";
 
 type Task = {
   id: string;
@@ -27,6 +28,7 @@ const ToDo = () => {
   const [view, setView] = useState<string>("myDay");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [pastTasks, setPastTasks] = useState<boolean>(false);
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
 
   useEffect(() => {
     dispatch(getAllTasks());
@@ -40,7 +42,6 @@ const ToDo = () => {
         dayjs(task.createdAt).isBefore(dayjs(), "day") && !task.isCompleted
     );
     setPastTasks(hasPastTasks);
-    console.log(todoTasks);
   }, [todoTasks]);
 
   const handleCompletedTask = (taskId: string) => {
@@ -61,6 +62,16 @@ const ToDo = () => {
     dispatch(importantTask(taskId));
   };
 
+  const handleEditTask = (task: Task) => {
+    setEditingTask(task);
+    setPastTasks(false);
+  };
+
+  const togglePastTasks = () => {
+    setPastTasks((prev) => !prev);
+    setEditingTask(null);
+  };
+
   return (
     <div className="p-5 flex justify-center gap-2">
       <section className="w-full">
@@ -69,7 +80,9 @@ const ToDo = () => {
             <button
               onClick={() => setView("myDay")}
               className={`p-1 font-bold text-sm rounded-sm flex items-center gap-1 ${
-                view === "myDay" ? "bg-teal-500 hover:bg-teal-400 text-white" : ""
+                view === "myDay"
+                  ? "bg-teal-500 hover:bg-teal-400 text-white"
+                  : ""
               }`}
             >
               <IoSunny />
@@ -78,7 +91,9 @@ const ToDo = () => {
             <button
               onClick={() => setView("importantTasks")}
               className={`p-1 font-bold text-sm rounded-sm flex items-center gap-1 ${
-                view === "importantTasks" ? "bg-red-400  hover:bg-red-300 text-white" : ""
+                view === "importantTasks"
+                  ? "bg-red-400  hover:bg-red-300 text-white"
+                  : ""
               }`}
             >
               <IoStarOutline />
@@ -87,7 +102,9 @@ const ToDo = () => {
             <button
               onClick={() => setView("allTasks")}
               className={`p-1 font-bold text-sm rounded-sm flex items-center gap-1 ${
-                view === "allTasks" ? "bg-teal-500 hover:bg-teal-400 text-white" : ""
+                view === "allTasks"
+                  ? "bg-teal-500 hover:bg-teal-400 text-white"
+                  : ""
               }`}
             >
               <IoHomeOutline />
@@ -97,7 +114,7 @@ const ToDo = () => {
 
           {view === "myDay" && (
             <div className="p-2 bg-zinc-900 hover:bg-zinc-800 rounded-md transition-all cursor-pointer">
-              <GoLightBulb onClick={() => setPastTasks(!pastTasks)} />
+              <GoLightBulb onClick={togglePastTasks} />
             </div>
           )}
         </div>
@@ -110,6 +127,7 @@ const ToDo = () => {
                 tasks={tasks}
                 onCompletedTask={handleCompletedTask}
                 onImportantTask={handleImportantTask}
+                onEditTask={handleEditTask}
               />
             )}
             {view === "allTasks" && (
@@ -117,6 +135,7 @@ const ToDo = () => {
                 tasks={tasks}
                 onCompletedTask={handleCompletedTask}
                 onImportantTask={handleImportantTask}
+                onEditTask={handleEditTask}
               />
             )}
             {view === "importantTasks" && (
@@ -124,12 +143,14 @@ const ToDo = () => {
                 tasks={tasks.filter((task) => task.isImportant)}
                 onCompletedTask={handleCompletedTask}
                 onImportantTask={handleImportantTask}
+                onEditTask={handleEditTask}
               />
             )}
           </div>
         </div>
       </section>
-      {view === "myDay" && pastTasks && (
+
+      {view === "myDay" && pastTasks && !editingTask && (
         <div>
           <div>
             <h1 className="text-2xl font-bold">Sugestões</h1>
@@ -139,8 +160,18 @@ const ToDo = () => {
             tasks={tasks}
             onCompletedTask={handleCompletedTask}
             onImportantTask={handleImportantTask}
+            onEditTask={handleEditTask}
           />
         </div>
+      )}
+
+      {editingTask && (
+        <EditTask
+          task={editingTask}
+          onCompletedTask={handleCompletedTask}
+          onImportantTask={handleImportantTask}
+          onEditTask={handleEditTask}
+        />
       )}
 
       {error && <p>Error: {error}</p>}

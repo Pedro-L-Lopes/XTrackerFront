@@ -3,31 +3,52 @@ import {
   IoCheckmarkCircleOutline,
   IoAdd,
 } from "react-icons/io5";
+import { changeTaskDate } from "../../slices/toDoSlice";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import dayjs from "dayjs";
+
+type Task = {
+  id: string;
+  title: string;
+  isCompleted: boolean;
+  isImportant: boolean;
+  createdAt: Date;
+  userId: string;
+};
 
 type TaskItemProps = {
-  task: {
-    id: string;
-    title: string;
-    isCompleted: boolean;
-    isImportant: boolean;
-    createdAt: Date;
-    userId: string;
-  };
+  task: Task;
   onCompletedTask: (taskId: string) => void;
   onImportantTask: (taskId: string) => void;
+  onEditTask: (task: Task) => void;
 };
 
 const TaskItemPast = ({
   task,
   onCompletedTask,
   onImportantTask,
+  onEditTask,
 }: TaskItemProps) => {
-  const handleCompletedTask = () => {
+  const dispatch = useAppDispatch();
+
+  const handleCompletedTask = (e: React.MouseEvent) => {
+    e.stopPropagation();
     onCompletedTask(task.id);
   };
 
-  const handleImportantTask = () => {
+  const handleImportantTask = (e: React.MouseEvent) => {
+    e.stopPropagation();
     onImportantTask(task.id);
+  };
+
+  const handleEditTask = () => {
+    return;
+  };
+
+  const handleChangeDate = () => {
+    const today = dayjs().format("YYYY-MM-DD");
+    dispatch(changeTaskDate({ taskId: task.id, date: today }));
+    window.location.reload();
   };
 
   return (
@@ -36,6 +57,7 @@ const TaskItemPast = ({
       className={`group mt-1 p-2 border-b border-zinc-900 transition-all flex items-center justify-between hover:cursor-pointer animate-fadeIn ${
         task.isCompleted ? "line-through text-gray-500" : ""
       }`}
+      onClick={handleEditTask}
     >
       <div className="flex items-center">
         {task.isCompleted ? (
@@ -63,7 +85,7 @@ const TaskItemPast = ({
         </span>
       </div>
       <div className="hover:scale-110 duration-200">
-        <IoAdd size={20} onClick={handleImportantTask} />
+        <IoAdd size={20} onClick={handleChangeDate} />
       </div>
     </li>
   );
