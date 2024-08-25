@@ -53,7 +53,7 @@ function App() {
             element={auth ? <Dashboard /> : <Navigate to="/login" />}
           /> */}
           <Route
-            path="/"
+            path="/XTrackerFront"
             element={auth ? <Habits /> : <Navigate to="/login" />}
           />
           {/* <Route
