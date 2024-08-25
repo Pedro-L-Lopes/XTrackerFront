@@ -5,7 +5,7 @@ import "./styles/global.css";
 import "./lib/dayjs";
 
 // Pages
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 // import Dashboard from "./pages/Dashboard";
@@ -37,18 +37,15 @@ function App() {
         {auth && <Sidebar />}
         <Routes>
           {/* Home */}
-          <Route
-            path="/"
-            element={!auth ? <Home /> : <Navigate to="/dashboard" />}
-          />
+          {/* <Route path="/" element={!auth ? <Home /> : <Navigate to="/" />} /> */}
           {/* Auth */}
           <Route
             path="/register"
-            element={!auth ? <Register /> : <Navigate to="/dashboard" />}
+            element={!auth ? <Register /> : <Navigate to="/" />}
           />
           <Route
             path="/login"
-            element={!auth ? <Login /> : <Navigate to="/dashboard" />}
+            element={!auth ? <Login /> : <Navigate to="/" />}
           />
           {/* Pages auth */}
           {/* <Route
@@ -56,7 +53,7 @@ function App() {
             element={auth ? <Dashboard /> : <Navigate to="/login" />}
           /> */}
           <Route
-            path="/habits"
+            path="/"
             element={auth ? <Habits /> : <Navigate to="/login" />}
           />
           {/* <Route

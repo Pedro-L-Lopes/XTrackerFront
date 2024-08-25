@@ -1,4 +1,6 @@
-export const api: string = "https://localhost:7138";
+// export const api: string = "https://localhost:7138";
+export const api: string =
+  "https://xtracker-g9f7hscca8gfhpc4.brazilsouth-01.azurewebsites.net";
 // export const uploads: string = "http://localhost:5000/uploads";
 
 export const requestConfig = (
