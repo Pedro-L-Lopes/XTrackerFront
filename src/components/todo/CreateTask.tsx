@@ -11,7 +11,7 @@ import { FiPlus } from "react-icons/fi";
 
 const CreateTask = () => {
   const dispatch = useAppDispatch();
-  const { error, loading } = useSelector((state: any) => state.todo);
+  const { error } = useSelector((state: any) => state.todo);
   const [title, setTitle] = useState<string>("");
 
   const submitHandle = async (e: FormEvent) => {

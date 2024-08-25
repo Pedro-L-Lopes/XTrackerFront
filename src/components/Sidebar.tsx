@@ -3,14 +3,10 @@ import { useState, createElement } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Icons
-import { BiTask } from "react-icons/bi";
 import { CiLogout } from "react-icons/ci";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { AiOutlineUser } from "react-icons/ai";
-import { RiSettings4Line } from "react-icons/ri";
-import { LiaDumbbellSolid } from "react-icons/lia";
-import { MdOutlineDashboard } from "react-icons/md";
-import { BsClipboardData, BsGraphUpArrow } from "react-icons/bs";
+import { BsClipboardData } from "react-icons/bs";
 
 // Redux
 import { useAppDispatch } from "../hooks/useAppDispatch";

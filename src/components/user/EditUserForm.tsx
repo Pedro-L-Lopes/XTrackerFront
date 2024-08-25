@@ -25,15 +25,15 @@ interface UpdateUser {
 
 const EditUserForm = ({
   user,
-  setShowDialog,
-}: {
+}: // setShowDialog,
+{
   user: User;
   setShowDialog: (open: boolean) => void;
 }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { error, loading, success } = useSelector((state: any) => state.user);
+  const { error, success } = useSelector((state: any) => state.user);
 
   const [userName, setUserName] = useState(user.userName);
   const [email, setEmail] = useState(user.email);

@@ -1,11 +1,11 @@
 import { api, requestConfig } from "../lib/config";
 
-type User = {
-  userId: string;
-  userName: string;
-  email?: string;
-  createdAt: string;
-};
+// type User = {
+//   userId: string;
+//   userName: string;
+//   email?: string;
+//   createdAt: string;
+// };
 
 interface UpdateUser {
   userId: string;
