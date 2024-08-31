@@ -40,11 +40,11 @@ function App() {
           {/* <Route path="/" element={!auth ? <Home /> : <Navigate to="/" />} /> */}
           {/* Auth */}
           <Route
-            path="/register"
+            path="/XTrackerFront/register"
             element={!auth ? <Register /> : <Navigate to="/" />}
           />
           <Route
-            path="/login"
+            path="/XTrackerFront/login"
             element={!auth ? <Login /> : <Navigate to="/" />}
           />
           {/* Pages auth */}
@@ -53,7 +53,7 @@ function App() {
             element={auth ? <Dashboard /> : <Navigate to="/login" />}
           /> */}
           <Route
-            path="/XTrackerFront"
+            path="/XTrackerFront/"
             element={auth ? <Habits /> : <Navigate to="/login" />}
           />
           {/* <Route
@@ -61,11 +61,11 @@ function App() {
             element={auth ? <ToDo /> : <Navigate to="/login" />}
           /> */}
           <Route
-            path="/user"
+            path="/XTrackerFront/user"
             element={auth ? <User /> : <Navigate to="/login" />}
           />
           <Route
-            path="/user/edit"
+            path="/XTrackerFront/user/edit"
             element={auth ? <EditUser /> : <Navigate to="/login" />}
           />
         </Routes>
