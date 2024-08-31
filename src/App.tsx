@@ -41,11 +41,11 @@ function App() {
           {/* Auth */}
           <Route
             path="/XTrackerFront/register"
-            element={!auth ? <Register /> : <Navigate to="/" />}
+            element={!auth ? <Register /> : <Navigate to="/XTrackerFront/" />}
           />
           <Route
             path="/XTrackerFront/login"
-            element={!auth ? <Login /> : <Navigate to="/" />}
+            element={!auth ? <Login /> : <Navigate to="/XTrackerFront/" />}
           />
           {/* Pages auth */}
           {/* <Route
@@ -54,7 +54,7 @@ function App() {
           /> */}
           <Route
             path="/XTrackerFront/"
-            element={auth ? <Habits /> : <Navigate to="/login" />}
+            element={auth ? <Habits /> : <Navigate to="/XTrackerFront/login" />}
           />
           {/* <Route
             path="/task"
@@ -62,11 +62,13 @@ function App() {
           /> */}
           <Route
             path="/XTrackerFront/user"
-            element={auth ? <User /> : <Navigate to="/login" />}
+            element={auth ? <User /> : <Navigate to="/XTrackerFront/login" />}
           />
           <Route
             path="/XTrackerFront/user/edit"
-            element={auth ? <EditUser /> : <Navigate to="/login" />}
+            element={
+              auth ? <EditUser /> : <Navigate to="/XTrackerFront/login" />
+            }
           />
         </Routes>
         <Footer />
