@@ -93,7 +93,7 @@ const Login = () => {
             Esqueceu a senha?
           </Link>
           <Link
-            to="/register"
+            to="/XTrackerFront/register"
             className="opacity-80 hover:opacity-100 transition-all"
           >
             Criar conta

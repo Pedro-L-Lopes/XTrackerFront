@@ -19,7 +19,7 @@ const Home = () => {
   const handleLogout = () => {
     dispatch(logout());
     dispatch(reset());
-    navigate("/login");
+    navigate("/XTrackerFront/login");
   };
 
   const menus = [

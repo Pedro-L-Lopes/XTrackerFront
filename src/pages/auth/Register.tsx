@@ -177,7 +177,7 @@ const Register = () => {
         />
         <div className="flex justify-between items-center">
           <Link
-            to="/login"
+            to="/XTrackerFront/login"
             className="opacity-80 hover:opacity-100 transition-all"
           >
             Já tem uma conta? Faça login
