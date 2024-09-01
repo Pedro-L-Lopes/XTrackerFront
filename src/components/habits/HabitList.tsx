@@ -39,7 +39,7 @@ const HabitList = ({ date, onCompletedChanged }: HabitListProps) => {
     };
 
     fetchData();
-  }, []);
+  }, [date]);
 
   async function handleToggleHabit(habitId: string) {
     const isHabitAlreadyCompleted =
@@ -68,6 +68,7 @@ const HabitList = ({ date, onCompletedChanged }: HabitListProps) => {
     );
   }
 
+  //console.log(habitsInfo);
   return (
     <div className="mt-6 flex flex-col gap-3">
       {habitsInfo &&

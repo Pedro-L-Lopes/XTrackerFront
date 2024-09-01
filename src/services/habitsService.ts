@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 
 // lib
 import { api } from "../lib/api";
+import dayjs from "dayjs";
 
 // User
 const userId = Cookies.get("id");
@@ -54,9 +55,13 @@ export const getHabitsForDay = async (date: Date) => {
 
 export const patchToggleHabit = async (habitId: string, date: Date) => {
   try {
+    const formattedDate = dayjs(date).format("YYYY-MM-DD");
+
     const response = await api.patch(
-      `/habit/${habitId}/toggle?date=${date.toISOString()}`
+      `/habit/${habitId}/toggle?date=${formattedDate}`
     );
+
+    console.log(formattedDate); 
 
     return response.data;
   } catch (error) {
